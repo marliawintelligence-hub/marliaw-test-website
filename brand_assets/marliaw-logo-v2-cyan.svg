@@ -1,0 +1,156 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 240" width="680" height="240">
+  <defs>
+    <!-- Deep space background from original -->
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#050A14"/>
+      <stop offset="100%" style="stop-color:#0A1628"/>
+    </linearGradient>
+
+    <!-- Cyan/blue gradient from original -->
+    <linearGradient id="cyan" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00D4FF"/>
+      <stop offset="100%" style="stop-color:#0066AA"/>
+    </linearGradient>
+    <linearGradient id="cyanH" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#00D4FF"/>
+      <stop offset="100%" style="stop-color:#0099CC"/>
+    </linearGradient>
+
+    <!-- Gold accent from original -->
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#C8A96E"/>
+      <stop offset="100%" style="stop-color:#E8C97E"/>
+    </linearGradient>
+
+    <!-- Subtle blue atmosphere -->
+    <linearGradient id="blueFade" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00D4FF;stop-opacity:0.12"/>
+      <stop offset="100%" style="stop-color:#00D4FF;stop-opacity:0"/>
+    </linearGradient>
+
+    <!-- Strong cyan glow -->
+    <filter id="hardGlow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="6" result="blur1"/>
+      <feGaussianBlur stdDeviation="2" result="blur2"/>
+      <feMerge>
+        <feMergeNode in="blur1"/>
+        <feMergeNode in="blur2"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Emblem outer glow (cyan tinted) -->
+    <filter id="emblemGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="10" result="bigBlur"/>
+      <feGaussianBlur stdDeviation="3" result="smallBlur"/>
+      <feColorMatrix in="bigBlur" type="matrix"
+        values="0 0 0 0 0  0.6 0.9 1 0 0.6  1 0 0 0 1  0 0 0 0.5 0" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="smallBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Text glow -->
+    <filter id="textGlow" x="-10%" y="-20%" width="120%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="680" height="240" fill="url(#bg)" rx="14"/>
+
+  <!-- Atmosphere blobs -->
+  <ellipse cx="100" cy="120" rx="130" ry="110" fill="url(#blueFade)"/>
+  <ellipse cx="620" cy="200" rx="100" ry="80" fill="#00D4FF" opacity="0.03"/>
+
+  <!-- Subtle grid lines from original -->
+  <g stroke="#00D4FF" stroke-width="0.4" opacity="0.05">
+    <line x1="0" y1="30" x2="680" y2="30"/>
+    <line x1="0" y1="60" x2="680" y2="60"/>
+    <line x1="0" y1="90" x2="680" y2="90"/>
+    <line x1="0" y1="120" x2="680" y2="120"/>
+    <line x1="0" y1="150" x2="680" y2="150"/>
+    <line x1="0" y1="180" x2="680" y2="180"/>
+    <line x1="0" y1="210" x2="680" y2="210"/>
+  </g>
+
+  <!-- ===== EMBLEM ===== -->
+  <g transform="translate(95, 120)" filter="url(#emblemGlow)">
+
+    <!-- Outermost diamond -->
+    <polygon points="0,-68 68,0 0,68 -68,0"
+             fill="none" stroke="url(#cyan)" stroke-width="1" opacity="0.25"/>
+
+    <!-- Mid diamond -->
+    <polygon points="0,-52 52,0 0,52 -52,0"
+             fill="none" stroke="url(#cyan)" stroke-width="1.5" opacity="0.45"/>
+
+    <!-- Inner diamond -->
+    <polygon points="0,-36 36,0 0,36 -36,0"
+             fill="none" stroke="url(#cyan)" stroke-width="2" opacity="0.7"/>
+
+    <!-- Diamond fill glow core -->
+    <polygon points="0,-36 36,0 0,36 -36,0"
+             fill="url(#cyan)" opacity="0.07"/>
+
+    <!-- Corner ticks on outer diamond -->
+    <line x1="0" y1="-68" x2="0" y2="-58" stroke="#00D4FF" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="68" y1="0" x2="58" y2="0" stroke="#00D4FF" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="0" y1="68" x2="0" y2="58" stroke="#00D4FF" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="-68" y1="0" x2="-58" y2="0" stroke="#00D4FF" stroke-width="2.5" stroke-linecap="round"/>
+
+    <!-- Bold M lettermark -->
+    <path d="M-22,-20 L-22,20 L-13,20 L-13,-4 L0,16 L13,-4 L13,20 L22,20 L22,-20 L13,-20 L0,0 L-13,-20 Z"
+          fill="url(#cyan)" filter="url(#hardGlow)"/>
+  </g>
+
+  <!-- ===== DIVIDER ===== -->
+  <line x1="184" y1="48" x2="184" y2="192" stroke="#00D4FF" stroke-width="0.8" opacity="0.35"/>
+
+  <!-- ===== WORDMARK ===== -->
+  <text x="206" y="120"
+        font-family="'Arial Black', 'Haettenschweiler', 'Impact', sans-serif"
+        font-size="52"
+        font-weight="900"
+        fill="#E8F4FF"
+        letter-spacing="4"
+        filter="url(#textGlow)">MARLIAW</text>
+
+  <!-- Gold underline from original -->
+  <rect x="206" y="129" width="442" height="2.5" fill="url(#gold)" rx="1.5" opacity="0.8"/>
+
+  <!-- INTELLIGENCE in cyan -->
+  <text x="209" y="160"
+        font-family="'Arial', 'Helvetica', sans-serif"
+        font-size="16"
+        font-weight="400"
+        fill="url(#cyanH)"
+        letter-spacing="14"
+        filter="url(#textGlow)">INTELLIGENCE</text>
+
+  <!-- AI · AUTOMATION -->
+  <text x="210" y="186"
+        font-family="'Arial', sans-serif"
+        font-size="10.5"
+        font-weight="300"
+        fill="#8AAFCC"
+        letter-spacing="5">AI  ·  AUTOMATION</text>
+
+  <!-- ===== CORNER ACCENTS (gold from original) ===== -->
+  <g stroke="url(#gold)" stroke-width="1.5" fill="none" opacity="0.5">
+    <polyline points="648,18 666,18 666,40"/>
+  </g>
+  <g stroke="url(#gold)" stroke-width="1.5" fill="none" opacity="0.5">
+    <polyline points="32,222 14,222 14,200"/>
+  </g>
+
+  <!-- Glowing corner dots -->
+  <circle cx="666" cy="18" r="2.5" fill="#00D4FF" opacity="0.9" filter="url(#hardGlow)"/>
+  <circle cx="14" cy="222" r="2.5" fill="#00D4FF" opacity="0.9" filter="url(#hardGlow)"/>
+</svg>

@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Marliaw Intelligence — AI Automation Agency</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;500;600&family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root {
+      --bg-deep:    #050A14;
+      --bg-surface: #0A1628;
+      --bg-card:    #0D1E35;
+      --bg-float:   #112240;
+      --cyan:       #00D4FF;
+      --cyan-dim:   #0099CC;
+      --cyan-glow:  rgba(0,212,255,0.18);
+      --gold:       #C8A96E;
+      --gold-light: #E8C97E;
+      --text-pri:   #E8F4FF;
+      --text-sec:   #8AAFCC;
+      --text-muted: #445E7A;
+      --border:     rgba(0,212,255,0.12);
+      --border-hov: rgba(0,212,255,0.35);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: var(--bg-deep);
+      color: var(--text-pri);
+      overflow-x: hidden;
+      line-height: 1.7;
+    }
+
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 0; opacity: 0.5;
+    }
+
+    .grid-bg {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(0,212,255,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,212,255,0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+    }
+
+    .radial-cyan {
+      position: absolute;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0,212,255,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .radial-gold {
+      position: absolute;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(200,169,110,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .font-mono { font-family: 'Roboto Mono', monospace; }
+
+    .display {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+    }
+
+    .label-tag {
+      font-family: 'Roboto Mono', monospace;
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--cyan);
+    }
+
+    .text-cyan-grad {
+      background: linear-gradient(90deg, var(--cyan) 0%, var(--cyan-dim) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .text-gold-grad {
+      background: linear-gradient(90deg, var(--gold) 0%, var(--gold-light) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .btn-glow {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: 'Roboto Mono', monospace;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 0.85rem 2rem;
+      color: #020810 !important;
+      background: linear-gradient(135deg, var(--cyan) 0%, var(--cyan-dim) 100%);
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform 0.2s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.2s ease;
+      box-shadow:
+        0 0 20px rgba(0,212,255,0.4),
+        0 0 60px rgba(0,212,255,0.15),
+        inset 0 1px 0 rgba(255,255,255,0.2);
+    }
+    .btn-glow:hover {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow:
+        0 0 30px rgba(0,212,255,0.6),
+        0 0 80px rgba(0,212,255,0.25),
+        inset 0 1px 0 rgba(255,255,255,0.2);
+    }
+    .btn-glow:active { transform: translateY(0) scale(0.99); }
+
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: 'Roboto Mono', monospace;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 0.85rem 2rem;
+      color: var(--cyan);
+      background: transparent;
+      border: 1px solid var(--border-hov);
+      border-radius: 3px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform 0.2s cubic-bezier(0.34,1.56,0.64,1), background 0.2s ease, border-color 0.2s ease;
+    }
+    .btn-outline:hover {
+      background: rgba(0,212,255,0.06);
+      border-color: var(--cyan);
+      transform: translateY(-2px);
+    }
+    .btn-outline:active { transform: translateY(0); }
+
+    .card {
+      background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-float) 100%);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      transition: border-color 0.3s ease, transform 0.3s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.3s ease;
+    }
+    .card:hover {
+      border-color: var(--border-hov);
+      transform: translateY(-4px);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4), 0 0 30px rgba(0,212,255,0.06);
+    }
+
+    .diamond-icon {
+      width: 48px; height: 48px;
+      position: relative;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .diamond-icon::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: rgba(0,212,255,0.06);
+      border: 1px solid rgba(0,212,255,0.3);
+      transform: rotate(45deg);
+      border-radius: 3px;
+    }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 1.2rem 2rem;
+      display: flex; align-items: center; justify-content: space-between;
+      background: linear-gradient(180deg, rgba(5,10,20,0.95) 0%, rgba(5,10,20,0) 100%);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(0,212,255,0.06);
+    }
+    .nav-logo { height: 44px; width: auto; }
+    .nav-links { display: flex; gap: 2.5rem; align-items: center; }
+    .nav-links a {
+      font-family: 'Roboto Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-sec);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    .nav-links a:hover { color: var(--cyan); }
+    .nav-links a:focus-visible { outline: 2px solid var(--cyan); outline-offset: 4px; border-radius: 2px; }
+
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+      opacity: 0.2;
+    }
+
+    .stat-pill {
+      border-left: 2px solid var(--cyan);
+      padding: 0 0 0 1.25rem;
+    }
+
+    .testimonial-quote::before {
+      content: '"';
+      font-size: 4rem;
+      line-height: 1;
+      color: var(--cyan);
+      opacity: 0.3;
+      font-family: Georgia, serif;
+      display: block;
+      margin-bottom: -1rem;
+    }
+
+    .corner-tl, .corner-br {
+      position: absolute;
+      width: 20px; height: 20px;
+      pointer-events: none;
+    }
+    .corner-tl {
+      top: 0; left: 0;
+      border-top: 1.5px solid var(--gold);
+      border-left: 1.5px solid var(--gold);
+      opacity: 0.5;
+    }
+    .corner-br {
+      bottom: 0; right: 0;
+      border-bottom: 1.5px solid var(--gold);
+      border-right: 1.5px solid var(--gold);
+      opacity: 0.5;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes pulseGlow {
+      0%, 100% { opacity: 0.6; }
+      50%       { opacity: 1; }
+    }
+    @keyframes scan {
+      0%   { transform: translateY(-100%); }
+      100% { transform: translateY(600%); }
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50%       { transform: translateY(-8px); }
+    }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    .animate-fade-up { animation: fadeUp 0.7s ease both; }
+    .delay-1 { animation-delay: 0.1s; }
+    .delay-2 { animation-delay: 0.2s; }
+    .delay-3 { animation-delay: 0.3s; }
+    .delay-4 { animation-delay: 0.4s; }
+    .delay-5 { animation-delay: 0.5s; }
+    .delay-6 { animation-delay: 0.6s; }
+    .float-anim { animation: float 4s ease-in-out infinite; }
+
+    .scan-line {
+      position: absolute;
+      left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+      opacity: 0.15;
+      animation: scan 6s linear infinite;
+    }
+
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg-deep); }
+    ::-webkit-scrollbar-thumb { background: var(--cyan-dim); border-radius: 2px; }
+
+    .section { padding: 7rem 2rem; position: relative; }
+    .section-inner { max-width: 1200px; margin: 0 auto; }
+
+    a:focus-visible, button:focus-visible {
+      outline: 2px solid var(--cyan);
+      outline-offset: 4px;
+      border-radius: 2px;
+    }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .section { padding: 5rem 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" aria-label="Marliaw Intelligence Home">
+    <img src="brand_assets/marliaw-logo-v2-cyan.svg" class="nav-logo" alt="Marliaw Intelligence" />
+  </a>
+  <div class="nav-links">
+    <a href="#services">Services</a>
+    <a href="#process">Process</a>
+    <a href="#why">Why Us</a>
+    <a href="#community">Community</a>
+    <a href="#contact" class="btn-glow" style="padding:0.6rem 1.4rem;">Get Started</a>
+  </div>
+</nav>
+
+
+<!-- HERO -->
+<section class="section" style="min-height:100vh; display:flex; align-items:center; padding-top:8rem; overflow:hidden;">
+  <div class="grid-bg"></div>
+  <div class="scan-line"></div>
+
+  <div class="radial-cyan" style="width:700px;height:700px;top:-200px;left:-150px;"></div>
+  <div class="radial-cyan" style="width:500px;height:500px;bottom:-100px;right:-100px;opacity:0.5;"></div>
+  <div class="radial-gold"  style="width:400px;height:400px;bottom:100px;left:30%;"></div>
+
+  <div class="float-anim" style="position:absolute;right:8%;top:50%;transform:translateY(-50%);width:380px;height:380px;opacity:0.12;">
+    <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <polygon points="100,4 196,100 100,196 4,100" stroke="#00D4FF" stroke-width="0.8" opacity="0.4"/>
+      <polygon points="100,20 180,100 100,180 20,100" stroke="#00D4FF" stroke-width="1.2" opacity="0.6"/>
+      <polygon points="100,40 160,100 100,160 40,100" stroke="#00D4FF" stroke-width="2" opacity="0.9"/>
+      <polygon points="100,40 160,100 100,160 40,100" fill="#00D4FF" opacity="0.04"/>
+      <circle cx="100" cy="4"   r="3" fill="#00D4FF" opacity="0.8"/>
+      <circle cx="196" cy="100" r="3" fill="#00D4FF" opacity="0.8"/>
+      <circle cx="100" cy="196" r="3" fill="#00D4FF" opacity="0.8"/>
+      <circle cx="4"   cy="100" r="3" fill="#00D4FF" opacity="0.8"/>
+    </svg>
+  </div>
+
+  <div class="section-inner" style="position:relative;z-index:1; width:100%;">
+    <div style="max-width:680px;">
+
+      <div class="label-tag animate-fade-up delay-1" style="display:inline-flex;align-items:center;gap:0.5rem;margin-bottom:1.5rem;">
+        <span style="width:24px;height:1px;background:var(--cyan);display:inline-block;"></span>
+        AI Automation Agency
+        <span style="width:24px;height:1px;background:var(--cyan);display:inline-block;"></span>
+      </div>
+
+      <h1 class="display animate-fade-up delay-2" style="font-size:clamp(2.8rem,6vw,5.5rem);margin-bottom:1.5rem;">
+        We Build<br/>
+        <span class="text-cyan-grad">Intelligent</span><br/>
+        Systems That<br/>
+        <span class="text-gold-grad">Scale.</span>
+      </h1>
+
+      <p class="animate-fade-up delay-3" style="font-size:1rem;color:var(--text-sec);max-width:480px;margin-bottom:2.5rem;line-height:1.8;">
+        Marliaw Intelligence designs and deploys AI automation solutions that eliminate bottlenecks, accelerate growth, and give your business an unfair advantage.
+      </p>
+
+      <div class="animate-fade-up delay-4" style="display:flex;gap:1rem;flex-wrap:wrap;align-items:center;">
+        <a href="#contact" class="btn-glow">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1l6 6-6 6M1 7h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          Start Your Project
+        </a>
+        <a href="#services" class="btn-outline">Explore Services</a>
+      </div>
+
+      <div class="animate-fade-up delay-5" style="display:flex;gap:3rem;flex-wrap:wrap;margin-top:4rem;padding-top:3rem;border-top:1px solid var(--border);">
+        <div class="stat-pill">
+          <div class="display text-cyan-grad" style="font-size:2rem;">150+</div>
+          <div style="font-size:0.7rem;color:var(--text-muted);font-family:'Roboto Mono',monospace;letter-spacing:0.1em;text-transform:uppercase;margin-top:0.2rem;">Automations Built</div>
+        </div>
+        <div class="stat-pill">
+          <div class="display text-cyan-grad" style="font-size:2rem;">40+</div>
+          <div style="font-size:0.7rem;color:var(--text-muted);font-family:'Roboto Mono',monospace;letter-spacing:0.1em;text-transform:uppercase;margin-top:0.2rem;">Clients Served</div>
+        </div>
+        <div class="stat-pill">
+          <div class="display text-gold-grad" style="font-size:2rem;">10x</div>
+          <div style="font-size:0.7rem;color:var(--text-muted);font-family:'Roboto Mono',monospace;letter-spacing:0.1em;text-transform:uppercase;margin-top:0.2rem;">Avg. Efficiency Gain</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- MARQUEE -->
+<div style="background:var(--bg-surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:1rem 0;overflow:hidden;white-space:nowrap;">
+  <div style="display:inline-flex;gap:4rem;animation:marquee 20s linear infinite;">
+    <span class="label-tag" style="color:var(--text-muted);">AI Agents</span>
+    <span style="color:var(--border-hov);">◆</span>
+    <span class="label-tag" style="color:var(--text-muted);">Workflow Automation</span>
+    <span style="color:var(--border-hov);">◆</span>
+    <span class="label-tag" style="color:var(--text-muted);">Custom LLM Solutions</span>
+    <span style="color:var(--border-hov);">◆</span>
+    <span class="label-tag" style="color:var(--text-muted);">Process Intelligence</span>
+    <span style="color:var(--border-hov);">◆</span>
+    <span class="label-tag" style="color:var(--text-muted);">Data Pipelines</span>
+    <span style="color:var(--border-hov);">◆</span>
+    <span class="label-tag" style="color:var(--text-muted);">API Integration</span>
+    <span style="color:var(--border-hov);">◆</span>
+    <span class="label-tag" style="color:var(--text-muted);">AI Agents</span>
+    <span style="color:var(--border-hov);">◆</span>
+    <span class="label-tag" style="color:var(--text-muted);">Workflow Automation</span>
+    <span style="color:var(--border-hov);">◆</span>
+    <span class="label-tag" style="color:var(--text-muted);">Custom LLM Solutions</span>
+    <span style="color:var(--border-hov);">◆</span>
+    <span class="label-tag" style="color:var(--text-muted);">Process Intelligence</span>
+    <span style="color:var(--border-hov);">◆</span>
+    <span class="label-tag" style="color:var(--text-muted);">Data Pipelines</span>
+    <span style="color:var(--border-hov);">◆</span>
+    <span class="label-tag" style="color:var(--text-muted);">API Integration</span>
+  </div>
+</div>
+
+
+<!-- SERVICES -->
+<section class="section" id="services">
+  <div class="radial-cyan" style="width:600px;height:600px;top:-100px;right:-100px;opacity:0.4;"></div>
+
+  <div class="section-inner">
+    <div style="text-align:center;margin-bottom:4rem;">
+      <div class="label-tag" style="margin-bottom:1rem;">What We Do</div>
+      <h2 class="display" style="font-size:clamp(2rem,4vw,3.2rem);">
+        Our <span class="text-cyan-grad">Core Services</span>
+      </h2>
+      <div class="divider" style="max-width:200px;margin:1.5rem auto 0;"></div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;">
+
+      <div class="card" style="padding:2.5rem;position:relative;overflow:hidden;">
+        <div class="corner-tl"></div>
+        <div class="diamond-icon" style="margin-bottom:1.5rem;">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none" style="position:relative;z-index:1;">
+            <circle cx="11" cy="11" r="3" fill="var(--cyan)"/>
+            <path d="M11 2v3M11 17v3M2 11h3M17 11h3" stroke="var(--cyan)" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M4.93 4.93l2.12 2.12M14.95 14.95l2.12 2.12M4.93 17.07l2.12-2.12M14.95 7.05l2.12-2.12" stroke="var(--cyan)" stroke-width="1" stroke-linecap="round" opacity="0.6"/>
+          </svg>
+        </div>
+        <h3 style="font-size:1.15rem;font-weight:700;margin-bottom:0.75rem;letter-spacing:-0.01em;">AI Agent Development</h3>
+        <p style="font-size:0.875rem;color:var(--text-sec);line-height:1.75;">Custom intelligent agents that perceive, reason, and act autonomously — handling complex tasks across your entire operation without human intervention.</p>
+        <div style="margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--border);">
+          <span class="label-tag" style="font-size:0.6rem;">GPT-4 · Claude · Gemini · LangChain</span>
+        </div>
+      </div>
+
+      <div class="card" style="padding:2.5rem;position:relative;overflow:hidden;border-color:rgba(0,212,255,0.25);">
+        <div class="corner-tl"></div>
+        <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 0 0, rgba(0,212,255,0.04) 0%, transparent 60%);pointer-events:none;"></div>
+        <div class="diamond-icon" style="margin-bottom:1.5rem;">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none" style="position:relative;z-index:1;">
+            <rect x="2" y="6" width="18" height="10" rx="2" stroke="var(--cyan)" stroke-width="1.5"/>
+            <path d="M6 10h4M6 13h2" stroke="var(--cyan)" stroke-width="1.5" stroke-linecap="round"/>
+            <circle cx="16" cy="11" r="2" fill="var(--cyan)" opacity="0.7"/>
+          </svg>
+        </div>
+        <div class="label-tag" style="font-size:0.6rem;margin-bottom:0.5rem;color:var(--gold);">Most Popular</div>
+        <h3 style="font-size:1.15rem;font-weight:700;margin-bottom:0.75rem;letter-spacing:-0.01em;">Workflow Automation</h3>
+        <p style="font-size:0.875rem;color:var(--text-sec);line-height:1.75;">End-to-end automation of repetitive business processes using n8n, Make, and custom pipelines — cutting manual work by up to 90%.</p>
+        <div style="margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--border);">
+          <span class="label-tag" style="font-size:0.6rem;">n8n · Make · Zapier · Custom APIs</span>
+        </div>
+      </div>
+
+      <div class="card" style="padding:2.5rem;position:relative;overflow:hidden;">
+        <div class="corner-tl"></div>
+        <div class="diamond-icon" style="margin-bottom:1.5rem;">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none" style="position:relative;z-index:1;">
+            <path d="M3 17L8 12L11 15L15 9L19 5" stroke="var(--cyan)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="19" cy="5" r="2" fill="var(--cyan)" opacity="0.8"/>
+          </svg>
+        </div>
+        <h3 style="font-size:1.15rem;font-weight:700;margin-bottom:0.75rem;letter-spacing:-0.01em;">Data Intelligence</h3>
+        <p style="font-size:0.875rem;color:var(--text-sec);line-height:1.75;">Transform raw data into strategic insight. We build pipelines, dashboards, and AI-powered analytics that surface what matters most to your business.</p>
+        <div style="margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--border);">
+          <span class="label-tag" style="font-size:0.6rem;">Python · SQL · Pinecone · Supabase</span>
+        </div>
+      </div>
+
+      <div class="card" style="padding:2.5rem;position:relative;overflow:hidden;">
+        <div class="corner-tl"></div>
+        <div class="diamond-icon" style="margin-bottom:1.5rem;">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none" style="position:relative;z-index:1;">
+            <path d="M7 8h8M7 12h5" stroke="var(--cyan)" stroke-width="1.5" stroke-linecap="round"/>
+            <rect x="2" y="3" width="18" height="16" rx="3" stroke="var(--cyan)" stroke-width="1.5"/>
+          </svg>
+        </div>
+        <h3 style="font-size:1.15rem;font-weight:700;margin-bottom:0.75rem;letter-spacing:-0.01em;">Custom LLM Applications</h3>
+        <p style="font-size:0.875rem;color:var(--text-sec);line-height:1.75;">Purpose-built AI apps — chatbots, RAG systems, content engines, and internal tools — trained on your data and tuned to your voice.</p>
+        <div style="margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--border);">
+          <span class="label-tag" style="font-size:0.6rem;">RAG · Fine-tuning · Vector DBs · APIs</span>
+        </div>
+      </div>
+
+      <div class="card" style="padding:2.5rem;position:relative;overflow:hidden;">
+        <div class="corner-tl"></div>
+        <div class="diamond-icon" style="margin-bottom:1.5rem;">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none" style="position:relative;z-index:1;">
+            <circle cx="5" cy="11" r="2" stroke="var(--cyan)" stroke-width="1.5"/>
+            <circle cx="17" cy="5" r="2" stroke="var(--cyan)" stroke-width="1.5"/>
+            <circle cx="17" cy="17" r="2" stroke="var(--cyan)" stroke-width="1.5"/>
+            <path d="M7 11h4M13 6l-4 4M13 16l-4-4" stroke="var(--cyan)" stroke-width="1" opacity="0.6"/>
+          </svg>
+        </div>
+        <h3 style="font-size:1.15rem;font-weight:700;margin-bottom:0.75rem;letter-spacing:-0.01em;">API & Systems Integration</h3>
+        <p style="font-size:0.875rem;color:var(--text-sec);line-height:1.75;">Seamlessly connect your existing tools, CRMs, ERPs, and third-party platforms into a unified AI-powered ecosystem.</p>
+        <div style="margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--border);">
+          <span class="label-tag" style="font-size:0.6rem;">REST · GraphQL · Webhooks · OAuth</span>
+        </div>
+      </div>
+
+      <div class="card" style="padding:2.5rem;position:relative;overflow:hidden;">
+        <div class="corner-tl"></div>
+        <div class="diamond-icon" style="margin-bottom:1.5rem;">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none" style="position:relative;z-index:1;">
+            <path d="M11 2l2.5 5 5.5.5-4 4 1 5.5L11 14.5 6 17l1-5.5-4-4 5.5-.5z" stroke="var(--cyan)" stroke-width="1.5" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h3 style="font-size:1.15rem;font-weight:700;margin-bottom:0.75rem;letter-spacing:-0.01em;">AI Strategy Consulting</h3>
+        <p style="font-size:0.875rem;color:var(--text-sec);line-height:1.75;">Not sure where to start? We audit your operations, identify automation opportunities, and deliver a prioritised AI roadmap with measurable ROI.</p>
+        <div style="margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--border);">
+          <span class="label-tag" style="font-size:0.6rem;">Audit · Roadmap · ROI Analysis · Training</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- PROCESS -->
+<section class="section" id="process" style="background:var(--bg-surface);">
+  <div class="grid-bg" style="opacity:0.5;"></div>
+  <div class="radial-gold" style="width:500px;height:500px;left:-100px;top:50%;transform:translateY(-50%);"></div>
+
+  <div class="section-inner" style="position:relative;z-index:1;">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;">
+
+      <div>
+        <div class="label-tag" style="margin-bottom:1rem;">How We Work</div>
+        <h2 class="display" style="font-size:clamp(2rem,4vw,3rem);margin-bottom:1.5rem;">
+          From Discovery<br/>to <span class="text-cyan-grad">Deployment</span>
+        </h2>
+        <p style="color:var(--text-sec);font-size:0.9rem;line-height:1.8;margin-bottom:2rem;">
+          Our structured engagement model ensures every automation we build is battle-tested, documented, and built to last — not a fragile prototype that breaks in production.
+        </p>
+        <a href="#contact" class="btn-glow">Begin Engagement</a>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:2.5rem;">
+        <div style="display:flex;gap:1.5rem;align-items:flex-start;">
+          <div style="flex-shrink:0;width:3rem;height:3rem;display:flex;align-items:center;justify-content:center;border:1px solid rgba(0,212,255,0.3);transform:rotate(45deg);border-radius:3px;">
+            <span class="font-mono" style="transform:rotate(-45deg);font-size:0.7rem;font-weight:700;color:var(--cyan);">01</span>
+          </div>
+          <div>
+            <h3 style="font-size:1rem;font-weight:700;margin-bottom:0.4rem;">Discovery & Audit</h3>
+            <p style="font-size:0.85rem;color:var(--text-sec);line-height:1.7;">We map your workflows, identify inefficiencies, and quantify the automation opportunity across your business.</p>
+          </div>
+        </div>
+        <div style="display:flex;gap:1.5rem;align-items:flex-start;">
+          <div style="flex-shrink:0;width:3rem;height:3rem;display:flex;align-items:center;justify-content:center;border:1px solid rgba(0,212,255,0.3);transform:rotate(45deg);border-radius:3px;">
+            <span class="font-mono" style="transform:rotate(-45deg);font-size:0.7rem;font-weight:700;color:var(--cyan);">02</span>
+          </div>
+          <div>
+            <h3 style="font-size:1rem;font-weight:700;margin-bottom:0.4rem;">Design & Architecture</h3>
+            <p style="font-size:0.85rem;color:var(--text-sec);line-height:1.7;">We architect the solution — choosing the right tools, models, and infrastructure for your specific requirements.</p>
+          </div>
+        </div>
+        <div style="display:flex;gap:1.5rem;align-items:flex-start;">
+          <div style="flex-shrink:0;width:3rem;height:3rem;display:flex;align-items:center;justify-content:center;border:1px solid rgba(0,212,255,0.3);transform:rotate(45deg);border-radius:3px;">
+            <span class="font-mono" style="transform:rotate(-45deg);font-size:0.7rem;font-weight:700;color:var(--cyan);">03</span>
+          </div>
+          <div>
+            <h3 style="font-size:1rem;font-weight:700;margin-bottom:0.4rem;">Build & Test</h3>
+            <p style="font-size:0.85rem;color:var(--text-sec);line-height:1.7;">Rapid development with iterative feedback loops. We build in sprints and test rigorously before any live deployment.</p>
+          </div>
+        </div>
+        <div style="display:flex;gap:1.5rem;align-items:flex-start;">
+          <div style="flex-shrink:0;width:3rem;height:3rem;display:flex;align-items:center;justify-content:center;border:1px solid rgba(0,212,255,0.4);transform:rotate(45deg);border-radius:3px;background:rgba(0,212,255,0.05);">
+            <span class="font-mono" style="transform:rotate(-45deg);font-size:0.7rem;font-weight:700;color:var(--cyan);">04</span>
+          </div>
+          <div>
+            <h3 style="font-size:1rem;font-weight:700;margin-bottom:0.4rem;">Deploy & Optimise</h3>
+            <p style="font-size:0.85rem;color:var(--text-sec);line-height:1.7;">Go live with confidence. We monitor, maintain, and continuously improve your automations as your business evolves.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- WHY MARLIAW -->
+<section class="section" id="why">
+  <div class="radial-cyan" style="width:800px;height:800px;top:50%;left:50%;transform:translate(-50%,-50%);opacity:0.15;"></div>
+
+  <div class="section-inner" style="position:relative;z-index:1;">
+    <div style="text-align:center;margin-bottom:4rem;">
+      <div class="label-tag" style="margin-bottom:1rem;">Our Advantage</div>
+      <h2 class="display" style="font-size:clamp(2rem,4vw,3.2rem);">
+        Why Choose <span class="text-gold-grad">Marliaw</span>
+      </h2>
+      <div class="divider" style="max-width:200px;margin:1.5rem auto 0;"></div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.5rem;">
+      <div style="padding:2rem;border-top:2px solid var(--cyan);background:rgba(0,212,255,0.02);">
+        <div style="font-size:2rem;margin-bottom:1rem;">⚡</div>
+        <h3 style="font-size:1rem;font-weight:700;margin-bottom:0.5rem;">Speed to Value</h3>
+        <p style="font-size:0.85rem;color:var(--text-sec);line-height:1.7;">First automations live in 2 weeks. We prioritise quick wins that demonstrate ROI before scaling further.</p>
+      </div>
+      <div style="padding:2rem;border-top:2px solid var(--gold);background:rgba(200,169,110,0.02);">
+        <div style="font-size:2rem;margin-bottom:1rem;">🔬</div>
+        <h3 style="font-size:1rem;font-weight:700;margin-bottom:0.5rem;">Deep Technical Expertise</h3>
+        <p style="font-size:0.85rem;color:var(--text-sec);line-height:1.7;">We live at the cutting edge of AI. Our team tracks every model release and integration pattern that matters.</p>
+      </div>
+      <div style="padding:2rem;border-top:2px solid var(--cyan);background:rgba(0,212,255,0.02);">
+        <div style="font-size:2rem;margin-bottom:1rem;">🎯</div>
+        <h3 style="font-size:1rem;font-weight:700;margin-bottom:0.5rem;">Business-First Thinking</h3>
+        <p style="font-size:0.85rem;color:var(--text-sec);line-height:1.7;">Technology serves your goals, not the other way around. Every decision is tied to measurable business outcomes.</p>
+      </div>
+      <div style="padding:2rem;border-top:2px solid var(--gold);background:rgba(200,169,110,0.02);">
+        <div style="font-size:2rem;margin-bottom:1rem;">🛡️</div>
+        <h3 style="font-size:1rem;font-weight:700;margin-bottom:0.5rem;">Built to Last</h3>
+        <p style="font-size:0.85rem;color:var(--text-sec);line-height:1.7;">Production-grade architecture with documentation, monitoring, and handover processes that keep running without us.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- COMMUNITY -->
+<section class="section" id="community" style="background:var(--bg-surface);">
+  <div class="grid-bg" style="opacity:0.3;"></div>
+  <div class="radial-cyan" style="width:500px;height:500px;right:-50px;bottom:-50px;opacity:0.3;"></div>
+
+  <div class="section-inner" style="position:relative;z-index:1;">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;">
+
+      <div>
+        <div class="label-tag" style="margin-bottom:1rem;">Join the Movement</div>
+        <h2 class="display" style="font-size:clamp(2rem,4vw,3rem);margin-bottom:1.5rem;">
+          The <span class="text-cyan-grad">AI Automation</span><br/>Society
+        </h2>
+        <p style="color:var(--text-sec);font-size:0.9rem;line-height:1.8;margin-bottom:1.5rem;">
+          Beyond client work, we run a thriving community of AI builders, operators, and enthusiasts. Get access to templates, tutorials, live sessions, and a network of people who are building the future.
+        </p>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:0.75rem;margin-bottom:2rem;">
+          <li style="display:flex;align-items:center;gap:0.75rem;font-size:0.875rem;color:var(--text-sec);">
+            <span style="color:var(--cyan);flex-shrink:0;">◆</span> Weekly live build sessions & walkthroughs
+          </li>
+          <li style="display:flex;align-items:center;gap:0.75rem;font-size:0.875rem;color:var(--text-sec);">
+            <span style="color:var(--cyan);flex-shrink:0;">◆</span> Curated automation templates library
+          </li>
+          <li style="display:flex;align-items:center;gap:0.75rem;font-size:0.875rem;color:var(--text-sec);">
+            <span style="color:var(--cyan);flex-shrink:0;">◆</span> Private community of 500+ AI builders
+          </li>
+          <li style="display:flex;align-items:center;gap:0.75rem;font-size:0.875rem;color:var(--text-sec);">
+            <span style="color:var(--cyan);flex-shrink:0;">◆</span> Monthly AI trend reports & insights
+          </li>
+        </ul>
+        <a href="#contact" class="btn-glow">Join the Community</a>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;">
+        <div class="card" style="padding:2rem;text-align:center;">
+          <div class="corner-tl"></div>
+          <div class="corner-br"></div>
+          <div class="display text-cyan-grad" style="font-size:2.5rem;margin-bottom:0.5rem;">500+</div>
+          <div style="font-size:0.7rem;color:var(--text-muted);font-family:'Roboto Mono',monospace;letter-spacing:0.1em;text-transform:uppercase;">Members</div>
+        </div>
+        <div class="card" style="padding:2rem;text-align:center;">
+          <div class="corner-tl"></div>
+          <div class="corner-br"></div>
+          <div class="display text-gold-grad" style="font-size:2.5rem;margin-bottom:0.5rem;">30+</div>
+          <div style="font-size:0.7rem;color:var(--text-muted);font-family:'Roboto Mono',monospace;letter-spacing:0.1em;text-transform:uppercase;">Countries</div>
+        </div>
+        <div class="card" style="padding:2rem;text-align:center;">
+          <div class="corner-tl"></div>
+          <div class="corner-br"></div>
+          <div class="display text-cyan-grad" style="font-size:2.5rem;margin-bottom:0.5rem;">100+</div>
+          <div style="font-size:0.7rem;color:var(--text-muted);font-family:'Roboto Mono',monospace;letter-spacing:0.1em;text-transform:uppercase;">Templates</div>
+        </div>
+        <div class="card" style="padding:2rem;text-align:center;">
+          <div class="corner-tl"></div>
+          <div class="corner-br"></div>
+          <div class="display text-gold-grad" style="font-size:2.5rem;margin-bottom:0.5rem;">Weekly</div>
+          <div style="font-size:0.7rem;color:var(--text-muted);font-family:'Roboto Mono',monospace;letter-spacing:0.1em;text-transform:uppercase;">Live Sessions</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- TESTIMONIALS -->
+<section class="section">
+  <div class="radial-gold" style="width:600px;height:600px;left:50%;transform:translateX(-50%);top:0;opacity:0.5;"></div>
+
+  <div class="section-inner" style="position:relative;z-index:1;">
+    <div style="text-align:center;margin-bottom:4rem;">
+      <div class="label-tag" style="margin-bottom:1rem;">Client Results</div>
+      <h2 class="display" style="font-size:clamp(2rem,4vw,3.2rem);">
+        What Our <span class="text-cyan-grad">Clients Say</span>
+      </h2>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem;">
+
+      <div class="card" style="padding:2.5rem;position:relative;">
+        <div class="corner-tl"></div>
+        <div class="testimonial-quote"></div>
+        <p style="font-size:0.9rem;color:var(--text-sec);line-height:1.8;margin-bottom:1.5rem;">Marliaw automated our entire client onboarding process. What took 3 days of manual work now happens in 20 minutes. The ROI was visible in the first month.</p>
+        <div style="display:flex;align-items:center;gap:1rem;">
+          <img src="https://placehold.co/44x44/0D1E35/00D4FF?text=SK" alt="Sarah K" style="width:44px;height:44px;border-radius:50%;border:1px solid var(--border-hov);" />
+          <div>
+            <div style="font-size:0.85rem;font-weight:700;">Sarah K.</div>
+            <div style="font-size:0.7rem;color:var(--text-muted);font-family:'Roboto Mono',monospace;">COO, FinTech Startup</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="padding:2.5rem;position:relative;border-color:rgba(0,212,255,0.2);">
+        <div class="corner-tl"></div>
+        <div class="testimonial-quote"></div>
+        <p style="font-size:0.9rem;color:var(--text-sec);line-height:1.8;margin-bottom:1.5rem;">The AI agent they built handles 80% of our customer support tickets without human involvement. Our team now focuses on strategic work instead of repetitive queries.</p>
+        <div style="display:flex;align-items:center;gap:1rem;">
+          <img src="https://placehold.co/44x44/0D1E35/C8A96E?text=MR" alt="Marcus R" style="width:44px;height:44px;border-radius:50%;border:1px solid var(--border-hov);" />
+          <div>
+            <div style="font-size:0.85rem;font-weight:700;">Marcus R.</div>
+            <div style="font-size:0.7rem;color:var(--text-muted);font-family:'Roboto Mono',monospace;">CEO, E-Commerce Brand</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="padding:2.5rem;position:relative;">
+        <div class="corner-tl"></div>
+        <div class="testimonial-quote"></div>
+        <p style="font-size:0.9rem;color:var(--text-sec);line-height:1.8;margin-bottom:1.5rem;">Beyond just the technical delivery, Marliaw helped us think differently about our entire operation. We've identified 12 more automation opportunities since working with them.</p>
+        <div style="display:flex;align-items:center;gap:1rem;">
+          <img src="https://placehold.co/44x44/0D1E35/00D4FF?text=AL" alt="Amara L" style="width:44px;height:44px;border-radius:50%;border:1px solid var(--border-hov);" />
+          <div>
+            <div style="font-size:0.85rem;font-weight:700;">Amara L.</div>
+            <div style="font-size:0.7rem;color:var(--text-muted);font-family:'Roboto Mono',monospace;">Head of Ops, SaaS Platform</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- CTA -->
+<section class="section" id="contact" style="background:var(--bg-surface);text-align:center;">
+  <div class="grid-bg"></div>
+  <div class="scan-line"></div>
+  <div class="radial-cyan" style="width:700px;height:700px;left:50%;top:50%;transform:translate(-50%,-50%);opacity:0.2;"></div>
+
+  <div class="section-inner" style="position:relative;z-index:1;max-width:700px;">
+    <div class="label-tag" style="margin-bottom:1.5rem;">Ready to Automate?</div>
+    <h2 class="display" style="font-size:clamp(2.5rem,5vw,4rem);margin-bottom:1.5rem;">
+      Let's Build Your<br/>
+      <span class="text-cyan-grad">AI-Powered Future</span>
+    </h2>
+    <p style="color:var(--text-sec);font-size:0.95rem;line-height:1.8;margin-bottom:3rem;max-width:500px;margin-left:auto;margin-right:auto;">
+      Book a free 30-minute discovery call. We'll audit your workflows, identify your biggest automation opportunities, and give you a clear picture of what's possible.
+    </p>
+
+    <div class="card" style="padding:2.5rem;text-align:left;max-width:560px;margin:0 auto;">
+      <div class="corner-tl"></div>
+      <div class="corner-br"></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;">
+        <div>
+          <label class="label-tag" style="display:block;margin-bottom:0.5rem;font-size:0.6rem;">First Name</label>
+          <input type="text" placeholder="John" style="width:100%;background:var(--bg-deep);border:1px solid var(--border);border-radius:3px;padding:0.75rem 1rem;color:var(--text-pri);font-family:'Roboto Mono',monospace;font-size:0.8rem;outline:none;transition:border-color 0.2s ease;" onfocus="this.style.borderColor='var(--cyan)'" onblur="this.style.borderColor='var(--border)'" />
+        </div>
+        <div>
+          <label class="label-tag" style="display:block;margin-bottom:0.5rem;font-size:0.6rem;">Last Name</label>
+          <input type="text" placeholder="Smith" style="width:100%;background:var(--bg-deep);border:1px solid var(--border);border-radius:3px;padding:0.75rem 1rem;color:var(--text-pri);font-family:'Roboto Mono',monospace;font-size:0.8rem;outline:none;transition:border-color 0.2s ease;" onfocus="this.style.borderColor='var(--cyan)'" onblur="this.style.borderColor='var(--border)'" />
+        </div>
+      </div>
+      <div style="margin-bottom:1rem;">
+        <label class="label-tag" style="display:block;margin-bottom:0.5rem;font-size:0.6rem;">Business Email</label>
+        <input type="email" placeholder="john@company.com" style="width:100%;background:var(--bg-deep);border:1px solid var(--border);border-radius:3px;padding:0.75rem 1rem;color:var(--text-pri);font-family:'Roboto Mono',monospace;font-size:0.8rem;outline:none;transition:border-color 0.2s ease;" onfocus="this.style.borderColor='var(--cyan)'" onblur="this.style.borderColor='var(--border)'" />
+      </div>
+      <div style="margin-bottom:1.5rem;">
+        <label class="label-tag" style="display:block;margin-bottom:0.5rem;font-size:0.6rem;">Tell us about your automation goals</label>
+        <textarea placeholder="We're looking to automate our..." rows="4" style="width:100%;background:var(--bg-deep);border:1px solid var(--border);border-radius:3px;padding:0.75rem 1rem;color:var(--text-pri);font-family:'Roboto Mono',monospace;font-size:0.8rem;outline:none;transition:border-color 0.2s ease;resize:vertical;" onfocus="this.style.borderColor='var(--cyan)'" onblur="this.style.borderColor='var(--border)'"></textarea>
+      </div>
+      <button class="btn-glow" style="width:100%;justify-content:center;display:flex;">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M7 1l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        Book Free Discovery Call
+      </button>
+    </div>
+  </div>
+</section>
+
+
+<!-- FOOTER -->
+<footer style="padding:3rem 2rem;background:var(--bg-deep);border-top:1px solid var(--border);">
+  <div style="max-width:1200px;margin:0 auto;">
+    <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;margin-bottom:3rem;">
+
+      <div>
+        <img src="brand_assets/marliaw-logo-v2-cyan.svg" style="height:52px;width:auto;margin-bottom:1.25rem;" alt="Marliaw Intelligence" />
+        <p style="font-size:0.8rem;color:var(--text-muted);line-height:1.8;max-width:280px;">AI automation agency building intelligent systems that scale. Trusted by forward-thinking businesses worldwide.</p>
+        <div style="display:flex;gap:1rem;margin-top:1.5rem;">
+          <a href="#" style="width:32px;height:32px;border:1px solid var(--border);border-radius:3px;display:flex;align-items:center;justify-content:center;color:var(--text-sec);text-decoration:none;font-size:0.7rem;transition:border-color 0.2s ease,color 0.2s ease;" aria-label="Twitter" onmouseover="this.style.borderColor='var(--cyan)';this.style.color='var(--cyan)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text-sec)'">𝕏</a>
+          <a href="#" style="width:32px;height:32px;border:1px solid var(--border);border-radius:3px;display:flex;align-items:center;justify-content:center;color:var(--text-sec);text-decoration:none;font-size:0.7rem;transition:border-color 0.2s ease,color 0.2s ease;" aria-label="LinkedIn" onmouseover="this.style.borderColor='var(--cyan)';this.style.color='var(--cyan)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text-sec)'">in</a>
+          <a href="#" style="width:32px;height:32px;border:1px solid var(--border);border-radius:3px;display:flex;align-items:center;justify-content:center;color:var(--text-sec);text-decoration:none;font-size:0.65rem;transition:border-color 0.2s ease,color 0.2s ease;" aria-label="YouTube" onmouseover="this.style.borderColor='var(--cyan)';this.style.color='var(--cyan)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text-sec)'">▶</a>
+        </div>
+      </div>
+
+      <div>
+        <div class="label-tag" style="margin-bottom:1.25rem;font-size:0.6rem;">Services</div>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:0.6rem;">
+          <li><a href="#" style="font-size:0.8rem;color:var(--text-sec);text-decoration:none;transition:color 0.2s ease;" onmouseover="this.style.color='var(--cyan)'" onmouseout="this.style.color='var(--text-sec)'">AI Agents</a></li>
+          <li><a href="#" style="font-size:0.8rem;color:var(--text-sec);text-decoration:none;transition:color 0.2s ease;" onmouseover="this.style.color='var(--cyan)'" onmouseout="this.style.color='var(--text-sec)'">Workflow Automation</a></li>
+          <li><a href="#" style="font-size:0.8rem;color:var(--text-sec);text-decoration:none;transition:color 0.2s ease;" onmouseover="this.style.color='var(--cyan)'" onmouseout="this.style.color='var(--text-sec)'">Data Intelligence</a></li>
+          <li><a href="#" style="font-size:0.8rem;color:var(--text-sec);text-decoration:none;transition:color 0.2s ease;" onmouseover="this.style.color='var(--cyan)'" onmouseout="this.style.color='var(--text-sec)'">LLM Applications</a></li>
+          <li><a href="#" style="font-size:0.8rem;color:var(--text-sec);text-decoration:none;transition:color 0.2s ease;" onmouseover="this.style.color='var(--cyan)'" onmouseout="this.style.color='var(--text-sec)'">Consulting</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="label-tag" style="margin-bottom:1.25rem;font-size:0.6rem;">Community</div>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:0.6rem;">
+          <li><a href="#" style="font-size:0.8rem;color:var(--text-sec);text-decoration:none;transition:color 0.2s ease;" onmouseover="this.style.color='var(--cyan)'" onmouseout="this.style.color='var(--text-sec)'">AI Society</a></li>
+          <li><a href="#" style="font-size:0.8rem;color:var(--text-sec);text-decoration:none;transition:color 0.2s ease;" onmouseover="this.style.color='var(--cyan)'" onmouseout="this.style.color='var(--text-sec)'">Templates</a></li>
+          <li><a href="#" style="font-size:0.8rem;color:var(--text-sec);text-decoration:none;transition:color 0.2s ease;" onmouseover="this.style.color='var(--cyan)'" onmouseout="this.style.color='var(--text-sec)'">Live Sessions</a></li>
+          <li><a href="#" style="font-size:0.8rem;color:var(--text-sec);text-decoration:none;transition:color 0.2s ease;" onmouseover="this.style.color='var(--cyan)'" onmouseout="this.style.color='var(--text-sec)'">Blog</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="label-tag" style="margin-bottom:1.25rem;font-size:0.6rem;">Company</div>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:0.6rem;">
+          <li><a href="#" style="font-size:0.8rem;color:var(--text-sec);text-decoration:none;transition:color 0.2s ease;" onmouseover="this.style.color='var(--cyan)'" onmouseout="this.style.color='var(--text-sec)'">About</a></li>
+          <li><a href="#" style="font-size:0.8rem;color:var(--text-sec);text-decoration:none;transition:color 0.2s ease;" onmouseover="this.style.color='var(--cyan)'" onmouseout="this.style.color='var(--text-sec)'">Case Studies</a></li>
+          <li><a href="#" style="font-size:0.8rem;color:var(--text-sec);text-decoration:none;transition:color 0.2s ease;" onmouseover="this.style.color='var(--cyan)'" onmouseout="this.style.color='var(--text-sec)'">Contact</a></li>
+          <li><a href="#" style="font-size:0.8rem;color:var(--text-sec);text-decoration:none;transition:color 0.2s ease;" onmouseover="this.style.color='var(--cyan)'" onmouseout="this.style.color='var(--text-sec)'">Privacy</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="divider" style="margin-bottom:2rem;"></div>
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;">
+      <span class="font-mono" style="font-size:0.65rem;color:var(--text-muted);">© 2026 Marliaw Intelligence. All rights reserved.</span>
+      <span class="font-mono" style="font-size:0.65rem;color:var(--text-muted);">AI · AUTOMATION · INTELLIGENCE</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.querySelectorAll('.card').forEach(card => {
+    card.addEventListener('mouseenter', () => {
+      card.style.transform = 'translateY(-4px)';
+      card.style.boxShadow = '0 20px 60px rgba(0,0,0,0.4), 0 0 30px rgba(0,212,255,0.06)';
+      card.style.borderColor = 'rgba(0,212,255,0.35)';
+    });
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = '';
+      card.style.boxShadow = '';
+      card.style.borderColor = '';
+    });
+  });
+</script>
+</body>
+</html>
