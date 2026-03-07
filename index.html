@@ -12,20 +12,20 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     :root {
-      --bg-deep:    #1A2238;
-      --bg-surface: #1E293B;
-      --bg-card:    #243044;
-      --bg-float:   #2A3655;
-      --cyan:       #9DAAF2;
-      --cyan-dim:   #6B7FD4;
-      --cyan-glow:  rgba(157,170,242,0.2);
-      --gold:       #FF6A3D;
-      --gold-light: #F4DB7D;
+      --bg-deep:    #070E1A;
+      --bg-surface: #0C1628;
+      --bg-card:    #112040;
+      --bg-float:   #172848;
+      --cyan:       #114AB1;
+      --cyan-dim:   #6793AC;
+      --cyan-glow:  rgba(17,74,177,0.25);
+      --gold:       #E4580B;
+      --gold-light: #FF7A3A;
       --text-pri:   #FFFFFF;
-      --text-sec:   #9DAAF2;
-      --text-muted: #5B6A8A;
-      --border:     rgba(157,170,242,0.15);
-      --border-hov: rgba(157,170,242,0.45);
+      --text-sec:   #6793AC;
+      --text-muted: #3D5A72;
+      --border:     rgba(17,74,177,0.2);
+      --border-hov: rgba(17,74,177,0.55);
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -49,8 +49,8 @@
     .grid-bg {
       position: absolute; inset: 0;
       background-image:
-        linear-gradient(rgba(157,170,242,0.05) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(157,170,242,0.05) 1px, transparent 1px);
+        linear-gradient(rgba(17,74,177,0.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(17,74,177,0.07) 1px, transparent 1px);
       background-size: 60px 60px;
       pointer-events: none;
     }
@@ -58,13 +58,13 @@
     .radial-cyan {
       position: absolute;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(157,170,242,0.14) 0%, transparent 70%);
+      background: radial-gradient(circle, rgba(17,74,177,0.2) 0%, transparent 70%);
       pointer-events: none;
     }
     .radial-gold {
       position: absolute;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(255,106,61,0.1) 0%, transparent 70%);
+      background: radial-gradient(circle, rgba(228,88,11,0.08) 0%, transparent 70%);
       pointer-events: none;
     }
 
@@ -87,13 +87,13 @@
     }
 
     .text-cyan-grad {
-      background: linear-gradient(90deg, #9DAAF2 0%, #6B7FD4 100%);
+      background: linear-gradient(90deg, #114AB1 0%, #6793AC 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
     .text-gold-grad {
-      background: linear-gradient(90deg, #FF6A3D 0%, #F4DB7D 100%);
+      background: linear-gradient(90deg, #E4580B 0%, #FF7A3A 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
@@ -118,15 +118,15 @@
       text-decoration: none;
       transition: transform 0.2s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.2s ease;
       box-shadow:
-        0 4px 20px rgba(157,170,242,0.35),
-        0 8px 40px rgba(157,170,242,0.15),
+        0 4px 20px rgba(17,74,177,0.5),
+        0 8px 40px rgba(17,74,177,0.2),
         inset 0 1px 0 rgba(255,255,255,0.15);
     }
     .btn-glow:hover {
       transform: translateY(-2px) scale(1.02);
       box-shadow:
-        0 6px 30px rgba(157,170,242,0.5),
-        0 12px 50px rgba(157,170,242,0.2),
+        0 6px 30px rgba(17,74,177,0.7),
+        0 12px 50px rgba(17,74,177,0.3),
         inset 0 1px 0 rgba(255,255,255,0.15);
     }
     .btn-glow:active { transform: translateY(0) scale(0.99); }
@@ -150,7 +150,7 @@
       transition: transform 0.2s cubic-bezier(0.34,1.56,0.64,1), background 0.2s ease, border-color 0.2s ease;
     }
     .btn-outline:hover {
-      background: rgba(157,170,242,0.08);
+      background: rgba(17,74,177,0.08);
       border-color: var(--cyan);
       transform: translateY(-2px);
     }
@@ -165,7 +165,7 @@
     .card:hover {
       border-color: var(--border-hov);
       transform: translateY(-4px);
-      box-shadow: 0 20px 60px rgba(0,0,0,0.4), 0 0 30px rgba(157,170,242,0.08);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 30px rgba(17,74,177,0.1);
     }
 
     .diamond-icon {
@@ -177,8 +177,8 @@
     .diamond-icon::before {
       content: '';
       position: absolute; inset: 0;
-      background: rgba(157,170,242,0.08);
-      border: 1px solid rgba(157,170,242,0.3);
+      background: rgba(17,74,177,0.1);
+      border: 1px solid rgba(17,74,177,0.35);
       transform: rotate(45deg);
       border-radius: 3px;
     }
@@ -187,9 +187,9 @@
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       padding: 1.2rem 2rem;
       display: flex; align-items: center; justify-content: space-between;
-      background: linear-gradient(180deg, rgba(26,34,56,0.97) 0%, rgba(26,34,56,0) 100%);
+      background: linear-gradient(180deg, rgba(7,14,26,0.97) 0%, rgba(7,14,26,0) 100%);
       backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(157,170,242,0.08);
+      border-bottom: 1px solid rgba(17,74,177,0.1);
     }
     .nav-logo { height: 44px; width: auto; }
     .nav-links { display: flex; gap: 2.5rem; align-items: center; }
@@ -286,7 +286,7 @@
 
     ::-webkit-scrollbar { width: 4px; }
     ::-webkit-scrollbar-track { background: var(--bg-deep); }
-    ::-webkit-scrollbar-thumb { background: #9DAAF2; border-radius: 2px; }
+    ::-webkit-scrollbar-thumb { background: #114AB1; border-radius: 2px; }
 
     .section { padding: 7rem 2rem; position: relative; }
     .section-inner { max-width: 1200px; margin: 0 auto; }
@@ -721,7 +721,7 @@
         <div class="testimonial-quote"></div>
         <p style="font-size:0.9rem;color:var(--text-sec);line-height:1.8;margin-bottom:1.5rem;">Marliaw automated our entire client onboarding process. What took 3 days of manual work now happens in 20 minutes. The ROI was visible in the first month.</p>
         <div style="display:flex;align-items:center;gap:1rem;">
-          <img src="https://placehold.co/44x44/9DAAF2/1A2238?text=SK" alt="Sarah K" style="width:44px;height:44px;border-radius:50%;border:1px solid var(--border-hov);" />
+          <img src="https://placehold.co/44x44/114AB1/FFFFFF?text=SK" alt="Sarah K" style="width:44px;height:44px;border-radius:50%;border:1px solid var(--border-hov);" />
           <div>
             <div style="font-size:0.85rem;font-weight:700;">Sarah K.</div>
             <div style="font-size:0.7rem;color:var(--text-muted);font-family:'Roboto Mono',monospace;">COO, FinTech Startup</div>
@@ -734,7 +734,7 @@
         <div class="testimonial-quote"></div>
         <p style="font-size:0.9rem;color:var(--text-sec);line-height:1.8;margin-bottom:1.5rem;">The AI agent they built handles 80% of our customer support tickets without human involvement. Our team now focuses on strategic work instead of repetitive queries.</p>
         <div style="display:flex;align-items:center;gap:1rem;">
-          <img src="https://placehold.co/44x44/FF6A3D/FFFFFF?text=MR" alt="Marcus R" style="width:44px;height:44px;border-radius:50%;border:1px solid var(--border-hov);" />
+          <img src="https://placehold.co/44x44/E4580B/FFFFFF?text=MR" alt="Marcus R" style="width:44px;height:44px;border-radius:50%;border:1px solid var(--border-hov);" />
           <div>
             <div style="font-size:0.85rem;font-weight:700;">Marcus R.</div>
             <div style="font-size:0.7rem;color:var(--text-muted);font-family:'Roboto Mono',monospace;">CEO, E-Commerce Brand</div>
@@ -747,7 +747,7 @@
         <div class="testimonial-quote"></div>
         <p style="font-size:0.9rem;color:var(--text-sec);line-height:1.8;margin-bottom:1.5rem;">Beyond just the technical delivery, Marliaw helped us think differently about our entire operation. We've identified 12 more automation opportunities since working with them.</p>
         <div style="display:flex;align-items:center;gap:1rem;">
-          <img src="https://placehold.co/44x44/9DAAF2/1A2238?text=AL" alt="Amara L" style="width:44px;height:44px;border-radius:50%;border:1px solid var(--border-hov);" />
+          <img src="https://placehold.co/44x44/114AB1/FFFFFF?text=AL" alt="Amara L" style="width:44px;height:44px;border-radius:50%;border:1px solid var(--border-hov);" />
           <div>
             <div style="font-size:0.85rem;font-weight:700;">Amara L.</div>
             <div style="font-size:0.7rem;color:var(--text-muted);font-family:'Roboto Mono',monospace;">Head of Ops, SaaS Platform</div>
