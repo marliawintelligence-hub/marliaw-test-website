@@ -4,28 +4,28 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Marliaw Intelligence — AI Automation Agency</title>
-  <link rel="icon" type="image/svg+xml" href="brand_assets/marliaw-logo-v2-cyan.svg" />
-  <link rel="shortcut icon" href="brand_assets/marliaw-logo-v2-cyan.svg" />
+  <link rel="icon" type="image/svg+xml" href="brand_assets/marliaw-logo-light.svg" />
+  <link rel="shortcut icon" href="brand_assets/marliaw-logo-light.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;500;600&family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     :root {
-      --bg-deep:    #141619;
-      --bg-surface: #1A1C26;
-      --bg-card:    #2C2E3A;
-      --bg-float:   #22253A;
-      --cyan:       #0A21C0;
-      --cyan-dim:   #050A44;
-      --cyan-glow:  rgba(10,33,192,0.25);
-      --gold:       #B3B4BD;
-      --gold-light: #FFFFFF;
-      --text-pri:   #FFFFFF;
-      --text-sec:   #B3B4BD;
-      --text-muted: #6B6C76;
-      --border:     rgba(10,33,192,0.18);
-      --border-hov: rgba(10,33,192,0.5);
+      --bg-deep:    #EDE8F5;
+      --bg-surface: #E2DCF0;
+      --bg-card:    #FFFFFF;
+      --bg-float:   #F5F3FB;
+      --cyan:       #3D52A0;
+      --cyan-dim:   #7091E6;
+      --cyan-glow:  rgba(61,82,160,0.15);
+      --gold:       #8697C4;
+      --gold-light: #ADBBDA;
+      --text-pri:   #1E1B4B;
+      --text-sec:   #8697C4;
+      --text-muted: #ADBBDA;
+      --border:     rgba(61,82,160,0.15);
+      --border-hov: rgba(61,82,160,0.4);
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -39,18 +39,13 @@
       line-height: 1.7;
     }
 
-    body::before {
-      content: '';
-      position: fixed; inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-      pointer-events: none; z-index: 0; opacity: 0.5;
-    }
+    body::before { display: none; }
 
     .grid-bg {
       position: absolute; inset: 0;
       background-image:
-        linear-gradient(rgba(10,33,192,0.06) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(10,33,192,0.06) 1px, transparent 1px);
+        linear-gradient(rgba(61,82,160,0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(61,82,160,0.06) 1px, transparent 1px);
       background-size: 60px 60px;
       pointer-events: none;
     }
@@ -58,13 +53,13 @@
     .radial-cyan {
       position: absolute;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(10,33,192,0.18) 0%, transparent 70%);
+      background: radial-gradient(circle, rgba(112,145,230,0.15) 0%, transparent 70%);
       pointer-events: none;
     }
     .radial-gold {
       position: absolute;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(179,180,189,0.06) 0%, transparent 70%);
+      background: radial-gradient(circle, rgba(173,187,218,0.2) 0%, transparent 70%);
       pointer-events: none;
     }
 
@@ -87,13 +82,13 @@
     }
 
     .text-cyan-grad {
-      background: linear-gradient(90deg, #0A21C0 0%, #5B82FF 100%);
+      background: linear-gradient(90deg, #3D52A0 0%, #7091E6 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
     .text-gold-grad {
-      background: linear-gradient(90deg, #B3B4BD 0%, #FFFFFF 100%);
+      background: linear-gradient(90deg, #7091E6 0%, #3D52A0 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
@@ -118,16 +113,16 @@
       text-decoration: none;
       transition: transform 0.2s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.2s ease;
       box-shadow:
-        0 4px 20px rgba(10,33,192,0.5),
-        0 8px 40px rgba(10,33,192,0.2),
-        inset 0 1px 0 rgba(255,255,255,0.15);
+        0 4px 20px rgba(61,82,160,0.35),
+        0 8px 40px rgba(61,82,160,0.15),
+        inset 0 1px 0 rgba(255,255,255,0.25);
     }
     .btn-glow:hover {
       transform: translateY(-2px) scale(1.02);
       box-shadow:
-        0 6px 30px rgba(10,33,192,0.7),
-        0 12px 50px rgba(10,33,192,0.3),
-        inset 0 1px 0 rgba(255,255,255,0.15);
+        0 6px 30px rgba(61,82,160,0.5),
+        0 12px 50px rgba(61,82,160,0.2),
+        inset 0 1px 0 rgba(255,255,255,0.25);
     }
     .btn-glow:active { transform: translateY(0) scale(0.99); }
 
@@ -150,7 +145,7 @@
       transition: transform 0.2s cubic-bezier(0.34,1.56,0.64,1), background 0.2s ease, border-color 0.2s ease;
     }
     .btn-outline:hover {
-      background: rgba(10,33,192,0.08);
+      background: rgba(61,82,160,0.08);
       border-color: var(--cyan);
       transform: translateY(-2px);
     }
@@ -165,7 +160,7 @@
     .card:hover {
       border-color: var(--border-hov);
       transform: translateY(-4px);
-      box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 30px rgba(10,33,192,0.12);
+      box-shadow: 0 20px 60px rgba(61,82,160,0.12), 0 0 30px rgba(112,145,230,0.1);
     }
 
     .diamond-icon {
@@ -177,8 +172,8 @@
     .diamond-icon::before {
       content: '';
       position: absolute; inset: 0;
-      background: rgba(10,33,192,0.1);
-      border: 1px solid rgba(10,33,192,0.4);
+      background: rgba(61,82,160,0.1);
+      border: 1px solid rgba(61,82,160,0.3);
       transform: rotate(45deg);
       border-radius: 3px;
     }
@@ -187,9 +182,10 @@
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       padding: 1.2rem 2rem;
       display: flex; align-items: center; justify-content: space-between;
-      background: linear-gradient(180deg, rgba(20,22,25,0.97) 0%, rgba(20,22,25,0) 100%);
+      background: rgba(237,232,245,0.95);
       backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(10,33,192,0.1);
+      border-bottom: 1px solid rgba(61,82,160,0.1);
+      box-shadow: 0 1px 20px rgba(61,82,160,0.08);
     }
     .nav-logo { height: 44px; width: auto; }
     .nav-links { display: flex; gap: 2.5rem; align-items: center; }
@@ -275,18 +271,11 @@
     .delay-6 { animation-delay: 0.6s; }
     .float-anim { animation: float 4s ease-in-out infinite; }
 
-    .scan-line {
-      position: absolute;
-      left: 0; right: 0;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--cyan), transparent);
-      opacity: 0.12;
-      animation: scan 6s linear infinite;
-    }
+    .scan-line { display: none; }
 
     ::-webkit-scrollbar { width: 4px; }
-    ::-webkit-scrollbar-track { background: var(--bg-deep); }
-    ::-webkit-scrollbar-thumb { background: var(--cyan); border-radius: 2px; }
+    ::-webkit-scrollbar-track { background: #EDE8F5; }
+    ::-webkit-scrollbar-thumb { background: #7091E6; border-radius: 2px; }
 
     .section { padding: 7rem 2rem; position: relative; }
     .section-inner { max-width: 1200px; margin: 0 auto; }
@@ -308,7 +297,7 @@
 <!-- NAV -->
 <nav>
   <a href="#" aria-label="Marliaw Intelligence Home">
-    <img src="brand_assets/marliaw-logo-v2-cyan.svg" class="nav-logo" alt="Marliaw Intelligence" />
+    <img src="brand_assets/marliaw-logo-light.svg" class="nav-logo" alt="Marliaw Intelligence" />
   </a>
   <div class="nav-links">
     <a href="#services">Services</a>
@@ -721,7 +710,7 @@
         <div class="testimonial-quote"></div>
         <p style="font-size:0.9rem;color:var(--text-sec);line-height:1.8;margin-bottom:1.5rem;">Marliaw automated our entire client onboarding process. What took 3 days of manual work now happens in 20 minutes. The ROI was visible in the first month.</p>
         <div style="display:flex;align-items:center;gap:1rem;">
-          <img src="https://placehold.co/44x44/0A21C0/FFFFFF?text=SK" alt="Sarah K" style="width:44px;height:44px;border-radius:50%;border:1px solid var(--border-hov);" />
+          <img src="https://placehold.co/44x44/3D52A0/FFFFFF?text=SK" alt="Sarah K" style="width:44px;height:44px;border-radius:50%;border:1px solid var(--border-hov);" />
           <div>
             <div style="font-size:0.85rem;font-weight:700;">Sarah K.</div>
             <div style="font-size:0.7rem;color:var(--text-muted);font-family:'Roboto Mono',monospace;">COO, FinTech Startup</div>
@@ -734,7 +723,7 @@
         <div class="testimonial-quote"></div>
         <p style="font-size:0.9rem;color:var(--text-sec);line-height:1.8;margin-bottom:1.5rem;">The AI agent they built handles 80% of our customer support tickets without human involvement. Our team now focuses on strategic work instead of repetitive queries.</p>
         <div style="display:flex;align-items:center;gap:1rem;">
-          <img src="https://placehold.co/44x44/2C2E3A/B3B4BD?text=MR" alt="Marcus R" style="width:44px;height:44px;border-radius:50%;border:1px solid var(--border-hov);" />
+          <img src="https://placehold.co/44x44/7091E6/FFFFFF?text=MR" alt="Marcus R" style="width:44px;height:44px;border-radius:50%;border:1px solid var(--border-hov);" />
           <div>
             <div style="font-size:0.85rem;font-weight:700;">Marcus R.</div>
             <div style="font-size:0.7rem;color:var(--text-muted);font-family:'Roboto Mono',monospace;">CEO, E-Commerce Brand</div>
@@ -747,7 +736,7 @@
         <div class="testimonial-quote"></div>
         <p style="font-size:0.9rem;color:var(--text-sec);line-height:1.8;margin-bottom:1.5rem;">Beyond just the technical delivery, Marliaw helped us think differently about our entire operation. We've identified 12 more automation opportunities since working with them.</p>
         <div style="display:flex;align-items:center;gap:1rem;">
-          <img src="https://placehold.co/44x44/0A21C0/FFFFFF?text=AL" alt="Amara L" style="width:44px;height:44px;border-radius:50%;border:1px solid var(--border-hov);" />
+          <img src="https://placehold.co/44x44/3D52A0/FFFFFF?text=AL" alt="Amara L" style="width:44px;height:44px;border-radius:50%;border:1px solid var(--border-hov);" />
           <div>
             <div style="font-size:0.85rem;font-weight:700;">Amara L.</div>
             <div style="font-size:0.7rem;color:var(--text-muted);font-family:'Roboto Mono',monospace;">Head of Ops, SaaS Platform</div>
@@ -914,7 +903,7 @@
     <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;margin-bottom:3rem;">
 
       <div>
-        <img src="brand_assets/marliaw-logo-v2-cyan.svg" style="height:52px;width:auto;margin-bottom:1.25rem;" alt="Marliaw Intelligence" />
+        <img src="brand_assets/marliaw-logo-light.svg" style="height:52px;width:auto;margin-bottom:1.25rem;" alt="Marliaw Intelligence" />
         <p style="font-size:0.8rem;color:var(--text-muted);line-height:1.8;max-width:280px;">AI automation agency building intelligent systems that scale. Trusted by forward-thinking businesses worldwide.</p>
         <div style="display:flex;gap:1rem;margin-top:1.5rem;">
           <a href="#" style="width:32px;height:32px;border:1px solid var(--border);border-radius:3px;display:flex;align-items:center;justify-content:center;color:var(--text-sec);text-decoration:none;font-size:0.7rem;transition:border-color 0.2s ease,color 0.2s ease;" aria-label="Twitter" onmouseover="this.style.borderColor='var(--cyan)';this.style.color='var(--cyan)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text-sec)'">𝕏</a>

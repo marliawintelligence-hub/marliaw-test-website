@@ -1,59 +1,53 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 240" width="680" height="240">
   <defs>
-    <linearGradient id="blue" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#0080C7"/>
-      <stop offset="100%" style="stop-color:#0C304D"/>
+    <linearGradient id="indigo" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3D52A0"/>
+      <stop offset="100%" style="stop-color:#7091E6"/>
     </linearGradient>
-    <linearGradient id="blueH" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" style="stop-color:#0080C7"/>
-      <stop offset="100%" style="stop-color:#0C304D"/>
+    <linearGradient id="indigoH" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#3D52A0"/>
+      <stop offset="100%" style="stop-color:#7091E6"/>
     </linearGradient>
   </defs>
 
   <!-- ===== EMBLEM ===== -->
   <g transform="translate(95, 120)">
-    <!-- Outermost diamond -->
     <polygon points="0,-68 68,0 0,68 -68,0"
-             fill="none" stroke="#0080C7" stroke-width="1" opacity="0.25"/>
-    <!-- Mid diamond -->
+             fill="none" stroke="#7091E6" stroke-width="1" opacity="0.25"/>
     <polygon points="0,-52 52,0 0,52 -52,0"
-             fill="none" stroke="#0080C7" stroke-width="1.5" opacity="0.45"/>
-    <!-- Inner diamond -->
+             fill="none" stroke="#7091E6" stroke-width="1.5" opacity="0.45"/>
     <polygon points="0,-36 36,0 0,36 -36,0"
-             fill="none" stroke="#0080C7" stroke-width="2" opacity="0.7"/>
-    <!-- Diamond fill -->
+             fill="none" stroke="#3D52A0" stroke-width="2" opacity="0.7"/>
     <polygon points="0,-36 36,0 0,36 -36,0"
-             fill="#0080C7" opacity="0.06"/>
-    <!-- Corner ticks -->
-    <line x1="0" y1="-68" x2="0" y2="-58" stroke="#0080C7" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="68" y1="0" x2="58" y2="0" stroke="#0080C7" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="0" y1="68" x2="0" y2="58" stroke="#0080C7" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="-68" y1="0" x2="-58" y2="0" stroke="#0080C7" stroke-width="2.5" stroke-linecap="round"/>
-    <!-- Bold M lettermark -->
+             fill="#3D52A0" opacity="0.08"/>
+    <line x1="0" y1="-68" x2="0" y2="-58" stroke="#3D52A0" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="68" y1="0" x2="58" y2="0" stroke="#3D52A0" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="0" y1="68" x2="0" y2="58" stroke="#3D52A0" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="-68" y1="0" x2="-58" y2="0" stroke="#3D52A0" stroke-width="2.5" stroke-linecap="round"/>
     <path d="M-22,-20 L-22,20 L-13,20 L-13,-4 L0,16 L13,-4 L13,20 L22,20 L22,-20 L13,-20 L0,0 L-13,-20 Z"
-          fill="url(#blue)"/>
+          fill="url(#indigo)"/>
   </g>
 
   <!-- ===== DIVIDER ===== -->
-  <line x1="184" y1="48" x2="184" y2="192" stroke="#0080C7" stroke-width="0.8" opacity="0.35"/>
+  <line x1="184" y1="48" x2="184" y2="192" stroke="#7091E6" stroke-width="0.8" opacity="0.35"/>
 
   <!-- ===== WORDMARK ===== -->
   <text x="206" y="120"
         font-family="'Arial Black', 'Haettenschweiler', 'Impact', sans-serif"
         font-size="52"
         font-weight="900"
-        fill="#0C304D"
+        fill="#1E1B4B"
         letter-spacing="4">MARLIAW</text>
 
-  <!-- Navy underline -->
-  <rect x="206" y="129" width="442" height="2.5" fill="url(#blueH)" rx="1.5" opacity="0.5"/>
+  <!-- Indigo underline -->
+  <rect x="206" y="129" width="442" height="2.5" fill="url(#indigoH)" rx="1.5" opacity="0.5"/>
 
-  <!-- INTELLIGENCE in blue -->
+  <!-- INTELLIGENCE in periwinkle -->
   <text x="209" y="160"
         font-family="'Arial', 'Helvetica', sans-serif"
         font-size="16"
         font-weight="400"
-        fill="#0080C7"
+        fill="#7091E6"
         letter-spacing="14">INTELLIGENCE</text>
 
   <!-- AI · AUTOMATION -->
@@ -61,6 +55,6 @@
         font-family="'Arial', sans-serif"
         font-size="10.5"
         font-weight="300"
-        fill="#9098A8"
+        fill="#8697C4"
         letter-spacing="5">AI  ·  AUTOMATION</text>
 </svg>
