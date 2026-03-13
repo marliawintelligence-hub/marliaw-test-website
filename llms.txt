@@ -1,0 +1,27 @@
+# Marliaw Intelligence
+
+> Marliaw Intelligence is an AI automation agency that builds custom automation systems for businesses — eliminating manual work through workflow automation, AI agents, document processing, and system integration.
+
+## About
+
+Marliaw Intelligence helps businesses automate repetitive, time-consuming processes using modern AI tools. The agency serves 30+ clients across 30+ countries, delivering production-ready automations in days rather than months. Core services include end-to-end workflow automation (n8n, Make, Zapier), custom AI agents, intelligent document processing, CRM/ERP integrations, and bespoke AI development.
+
+## Services
+
+- **Workflow Automation** — End-to-end process automation using n8n, Make, and Zapier
+- **AI Agents** — Custom AI agents that handle research, outreach, and decision-making tasks
+- **Document Processing** — Intelligent extraction and processing from invoices, contracts, and forms
+- **System Integration** — Connecting CRMs, ERPs, databases, and third-party APIs
+- **Custom AI Development** — Bespoke AI solutions tailored to specific business needs
+- **AI Consulting** — Strategy and roadmap for AI adoption
+
+## Key Results
+
+- Invoice processing time reduced from 3 days to 11 minutes for a logistics client
+- 10x average efficiency gain across client implementations
+- 30+ businesses served across 30+ countries
+
+## Contact
+
+- Website: https://marliawintelligence.com
+- Email: contact@marliawintelligence.com
