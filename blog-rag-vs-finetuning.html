@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RAG vs Fine-Tuning: Which Should You Use for Your Business AI? — Marliaw Intelligence</title>
+  <meta name="description" content="RAG and fine-tuning both let you make LLMs work on your data — but they solve different problems. Choose the wrong one and you waste months. Here's how to decide." />
+  <link rel="canonical" href="https://marliawintelligence.com/blog-rag-vs-finetuning.html" />
+  <link rel="icon" type="image/svg+xml" href="brand_assets/marliaw-logo-v2-cyan.svg" />
+  <!-- OG tags -->
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="RAG vs Fine-Tuning: Which Should You Use for Your Business AI?" />
+  <meta property="og:description" content="RAG and fine-tuning both let you make LLMs work on your data — but they solve different problems. Choose the wrong one and you waste months. Here's how to decide." />
+  <meta property="og:url" content="https://marliawintelligence.com/blog-rag-vs-finetuning.html" />
+  <meta property="og:site_name" content="Marliaw Intelligence" />
+  <!-- Article JSON-LD schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "RAG vs Fine-Tuning: Which Should You Use for Your Business AI?",
+    "description": "RAG and fine-tuning both let you make LLMs work on your data — but they solve different problems. Choose the wrong one and you waste months. Here's how to decide.",
+    "datePublished": "2026-01-30",
+    "dateModified": "2026-01-30",
+    "author": {
+      "@type": "Organization",
+      "name": "Marliaw Intelligence",
+      "url": "https://marliawintelligence.com"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Marliaw Intelligence",
+      "url": "https://marliawintelligence.com",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://marliawintelligence.com/brand_assets/marliaw-logo-v2-cyan.svg"
+      }
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://marliawintelligence.com/blog-rag-vs-finetuning.html"
+    }
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;500&family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #070E1A; color: #fff; font-family: 'Montserrat', sans-serif; line-height: 1.7; }
+    .prose h2 { font-size: 1.4rem; font-weight: 800; letter-spacing: -0.02em; margin: 2.5rem 0 1rem; color: #fff; }
+    .prose h3 { font-size: 1.1rem; font-weight: 700; margin: 2rem 0 0.75rem; color: #6793AC; }
+    .prose p { color: #c0cfe0; font-size: 0.95rem; margin-bottom: 1.25rem; line-height: 1.8; }
+    .prose ul, .prose ol { padding-left: 1.5rem; margin-bottom: 1.25rem; }
+    .prose li { color: #c0cfe0; font-size: 0.95rem; margin-bottom: 0.5rem; line-height: 1.7; }
+    .prose ul { list-style: disc; }
+    .prose ol { list-style: decimal; }
+    .prose strong { color: #fff; font-weight: 700; }
+    .prose blockquote { border-left: 3px solid #114AB1; padding-left: 1.25rem; margin: 1.5rem 0; }
+    .prose blockquote p { color: #6793AC; font-style: italic; }
+    .prose code { font-family: 'Roboto Mono', monospace; font-size: 0.8rem; background: #112040; padding: 0.15rem 0.4rem; border-radius: 3px; color: #6793AC; }
+    .stat-box { background: #112040; border: 1px solid rgba(17,74,177,0.3); border-radius: 6px; padding: 1.5rem; margin: 1.5rem 0; }
+    .stat-box .number { font-size: 2.5rem; font-weight: 900; letter-spacing: -0.03em; background: linear-gradient(90deg, #114AB1, #6793AC); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .tag { font-family: 'Roboto Mono', monospace; font-size: 0.6rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; }
+    .comparison-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.85rem; }
+    .comparison-table th { background: #112040; color: #6793AC; font-family: 'Roboto Mono', monospace; font-size: 0.65rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.75rem 1rem; text-align: left; border-bottom: 1px solid rgba(17,74,177,0.3); }
+    .comparison-table td { padding: 0.75rem 1rem; border-bottom: 1px solid rgba(17,74,177,0.1); color: #c0cfe0; vertical-align: top; }
+    .comparison-table tr:last-child td { border-bottom: none; }
+    .comparison-table td:first-child { color: #fff; font-weight: 600; }
+    .win-rag { color: #114AB1; font-weight: 700; }
+    .win-ft { color: #E4580B; font-weight: 700; }
+    .decision-step { background: #0C1628; border: 1px solid rgba(17,74,177,0.2); border-radius: 6px; padding: 1.25rem 1.5rem; margin: 0.75rem 0; display: flex; gap: 1rem; align-items: flex-start; }
+    .decision-num { font-family: 'Roboto Mono', monospace; font-size: 0.7rem; font-weight: 600; color: #114AB1; background: rgba(17,74,177,0.15); padding: 0.25rem 0.6rem; border-radius: 3px; white-space: nowrap; margin-top: 0.15rem; }
+  </style>
+</head>
+<body>
+  <!-- Nav -->
+  <nav style="position:fixed;top:0;left:0;right:0;z-index:100;padding:1rem 2rem;background:rgba(7,14,26,0.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(17,74,177,0.1);display:flex;align-items:center;justify-content:space-between;">
+    <a href="/" style="display:flex;align-items:center;text-decoration:none;">
+      <img src="brand_assets/marliaw-logo-v2-cyan.svg" style="height:36px;width:auto;" alt="Marliaw Intelligence" />
+    </a>
+    <a href="/#blog" style="font-family:'Roboto Mono',monospace;font-size:0.65rem;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:#6793AC;text-decoration:none;border:1px solid rgba(17,74,177,0.3);padding:0.5rem 1rem;border-radius:3px;transition:border-color 0.2s ease,color 0.2s ease;" onmouseover="this.style.borderColor='rgba(17,74,177,0.7)';this.style.color='#fff'" onmouseout="this.style.borderColor='rgba(17,74,177,0.3)';this.style.color='#6793AC'">← All Articles</a>
+  </nav>
+
+  <!-- Article -->
+  <main style="max-width:760px;margin:0 auto;padding:8rem 1.5rem 6rem;">
+
+    <!-- Header -->
+    <header style="margin-bottom:3rem;">
+      <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;">
+        <span class="tag" style="color:#114AB1;">AI Agents</span>
+        <span style="color:#3D5A72;font-family:'Roboto Mono',monospace;font-size:0.65rem;">January 30, 2026</span>
+        <span style="color:#3D5A72;font-family:'Roboto Mono',monospace;font-size:0.65rem;">12 min read</span>
+      </div>
+      <h1 style="font-size:clamp(1.8rem,4vw,2.8rem);font-weight:900;letter-spacing:-0.03em;line-height:1.1;margin-bottom:1.25rem;">RAG vs Fine-Tuning: Which Should You Use for Your Business AI?</h1>
+      <p style="font-size:1.05rem;color:#6793AC;line-height:1.7;border-left:3px solid #114AB1;padding-left:1.25rem;">Both approaches let you make LLMs work on your specific data — but they solve fundamentally different problems. Picking the wrong one can cost you months. Here's how to decide.</p>
+      <div style="margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid rgba(17,74,177,0.2);display:flex;align-items:center;gap:0.75rem;">
+        <span style="font-size:0.8rem;color:#3D5A72;font-family:'Roboto Mono',monospace;">By</span>
+        <span style="font-size:0.8rem;color:#6793AC;font-family:'Roboto Mono',monospace;font-weight:600;">Marliaw Intelligence Team</span>
+      </div>
+    </header>
+
+    <!-- Content -->
+    <article class="prose">
+
+      <p>One of the most common questions we get from businesses building their first AI system: <em>"Should we fine-tune a model on our data, or use RAG?"</em> It's a reasonable question — both approaches let you give an LLM access to your company-specific knowledge, and both can produce impressive results. But they solve fundamentally different problems, and the wrong choice can waste months of engineering effort and tens of thousands of dollars.</p>
+
+      <p>This guide will give you a clear mental model for choosing between them — and explain why, for most businesses, the answer is simpler than it sounds.</p>
+
+      <h2>What is RAG?</h2>
+
+      <p><strong>Retrieval-Augmented Generation</strong> (RAG) is an architecture where the underlying language model stays completely unchanged. Instead of baking knowledge into the model, you maintain a separate knowledge base — a vector database containing your documents, policies, product information, or any other content you want the AI to reference.</p>
+
+      <p>When a user asks a question, the system first searches the knowledge base for the most relevant chunks of text, then feeds those chunks to the model as context along with the question. The model generates its answer using that provided context rather than relying solely on what it learned during training.</p>
+
+      <p>Think of it like an <strong>open-book exam</strong>. The model doesn't need to memorise your company's entire policy library — it just needs to be able to read, understand, and synthesise information from the right pages when asked.</p>
+
+      <p>RAG systems are built from a few key components: a document ingestion pipeline (parse, chunk, embed), a vector store (Pinecone, Chroma, Weaviate, pgvector, etc.), a retrieval layer that finds relevant context at query time, and the LLM itself, which generates the response. Modern RAG systems also include re-ranking layers, query expansion, and hybrid search that combines semantic and keyword matching for higher accuracy.</p>
+
+      <h2>What is Fine-Tuning?</h2>
+
+      <p>Fine-tuning takes a different approach entirely. Instead of giving the model information at query time, you retrain the model's weights on your specific data. The knowledge gets <strong>baked into the model itself</strong> — changed at the parameter level, not attached as external context.</p>
+
+      <p>If RAG is an open-book exam, fine-tuning is like hiring an employee who has spent three months doing nothing but reading your company handbook, your historical emails, your internal documentation — until they know it all from memory. They don't need to look anything up; it's just part of how they think and respond.</p>
+
+      <p>Fine-tuning requires a labelled training dataset (typically hundreds to thousands of examples in a prompt/completion format), significant compute resources or access to a fine-tuning API (OpenAI, Anthropic, and others offer this), and a re-evaluation and iteration cycle to get performance right. It's slower to set up, more expensive to run, and harder to update — but in the right circumstances, it produces dramatically better results.</p>
+
+      <h2>The Key Differences</h2>
+
+      <p>Here's how the two approaches compare across the dimensions that matter most for a business decision:</p>
+
+      <table class="comparison-table">
+        <thead>
+          <tr>
+            <th>Dimension</th>
+            <th>RAG</th>
+            <th>Fine-Tuning</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Cost to implement</td>
+            <td><span class="win-rag">Lower</span> — vector DB + API calls</td>
+            <td>Higher — training compute + API</td>
+          </tr>
+          <tr>
+            <td>Knowledge freshness</td>
+            <td><span class="win-rag">Real-time</span> — update docs, instant effect</td>
+            <td>Stale — requires re-training to update</td>
+          </tr>
+          <tr>
+            <td>Factual accuracy on your data</td>
+            <td>Good, dependent on retrieval quality</td>
+            <td><span class="win-ft">Excellent</span> when trained well</td>
+          </tr>
+          <tr>
+            <td>Tone/style/format consistency</td>
+            <td>Depends on prompting</td>
+            <td><span class="win-ft">Excellent</span> — baked into model behaviour</td>
+          </tr>
+          <tr>
+            <td>Ease of updating knowledge</td>
+            <td><span class="win-rag">Easy</span> — add/remove documents</td>
+            <td>Difficult — requires new training run</td>
+          </tr>
+          <tr>
+            <td>Time to first working prototype</td>
+            <td><span class="win-rag">Days to weeks</span></td>
+            <td>Weeks to months</td>
+          </tr>
+          <tr>
+            <td>Transparency (can you see why it answered?)</td>
+            <td><span class="win-rag">High</span> — retrieved sources visible</td>
+            <td>Low — knowledge is opaque in weights</td>
+          </tr>
+          <tr>
+            <td>Hallucination risk</td>
+            <td>Reduced by grounding in retrieved docs</td>
+            <td>Can be higher if training data is limited</td>
+          </tr>
+          <tr>
+            <td>Inference latency</td>
+            <td>Slightly higher (retrieval step adds ~50–200ms)</td>
+            <td><span class="win-ft">Lower</span> — no external retrieval needed</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>When RAG Wins</h2>
+
+      <p>RAG is the right choice when your knowledge needs to stay current and your primary goal is accurate, grounded answers based on your existing documents and data. Specific scenarios where RAG dramatically outperforms fine-tuning:</p>
+
+      <ul>
+        <li><strong>Internal knowledge bases and wikis</strong> — policies, procedures, and documentation change regularly. With RAG, you update the document and the AI immediately reflects the change. With fine-tuning, you'd need to retrain.</li>
+        <li><strong>Customer support bots</strong> — support knowledge evolves constantly: new products, new FAQs, pricing changes, policy updates. RAG makes this trivial to maintain.</li>
+        <li><strong>Document Q&A</strong> — legal contracts, technical manuals, research papers. The AI needs to cite specific clauses and sections. RAG can surface the exact source text; fine-tuning cannot.</li>
+        <li><strong>Compliance-sensitive environments</strong> — when you need to show your AI's reasoning (regulators, auditors, legal teams), RAG's visible retrieval chain is invaluable. Fine-tuning is a black box.</li>
+        <li><strong>Large, varied knowledge bases</strong> — if your knowledge spans hundreds of documents across diverse topics, RAG scales naturally. Fine-tuning has context limits and can lose coherence across a very large training corpus.</li>
+      </ul>
+
+      <h2>When Fine-Tuning Wins</h2>
+
+      <p>Fine-tuning earns its complexity premium in scenarios where you need deeply consistent behaviour that goes beyond what a prompt and retrieved context can deliver:</p>
+
+      <ul>
+        <li><strong>Specific tone, style, or brand voice</strong> — if you need the AI to consistently write exactly like your brand, with your specific vocabulary and cadence, fine-tuning can internalise this in a way that prompt engineering simply can't match at scale.</li>
+        <li><strong>Specialised domain tasks</strong> — medical diagnosis support, legal document drafting, scientific data analysis. Domain-expert performance often requires training on domain-specific examples, not just retrieval.</li>
+        <li><strong>Classification at high volume</strong> — routing tickets, categorising products, sentiment classification. Fine-tuned models can do this in a single inference step with high accuracy; RAG adds unnecessary complexity.</li>
+        <li><strong>Low-latency, high-volume inference</strong> — if you need to make millions of AI calls and every 100ms matters, a smaller, fine-tuned model running locally can be both faster and cheaper than an API-based RAG system.</li>
+        <li><strong>Instruction following at a specific task</strong> — if you have a very narrow, well-defined task with hundreds of labelled examples of exactly what good output looks like, fine-tuning will consistently outperform in-context prompting.</li>
+      </ul>
+
+      <h2>The Hybrid Approach</h2>
+
+      <p>Here's what the most sophisticated production AI systems actually do: <strong>both</strong>.</p>
+
+      <p>The pattern looks like this: fine-tune a smaller, faster base model to follow instructions in your preferred format, adopt your brand's tone, and handle the structural aspects of the task correctly. Then layer RAG on top to give that model access to current, grounded factual knowledge it couldn't possibly have memorised.</p>
+
+      <p>This hybrid architecture combines the best of both worlds: the fine-tuned model provides consistency and efficiency; the RAG layer provides accuracy and freshness. You get a model that both sounds right and knows the right things.</p>
+
+      <blockquote>
+        <p>Think of the fine-tuned model as the skilled employee who knows your company's communication style inside-out — and RAG as the search system they use to look up the specific facts before responding.</p>
+      </blockquote>
+
+      <p>Hybrid systems are more complex to build and maintain, so they're typically worth the investment only when you're scaling to significant usage or when you genuinely need both capabilities. For most SMBs, RAG alone will handle 90% of use cases.</p>
+
+      <h2>A Decision Framework</h2>
+
+      <p>If you're unsure which approach is right for your situation, work through these four questions:</p>
+
+      <div class="decision-step">
+        <span class="decision-num">Q1</span>
+        <div>
+          <strong style="color:#fff;font-size:0.9rem;">Does your knowledge change frequently?</strong>
+          <p style="margin-top:0.4rem;margin-bottom:0;font-size:0.85rem;">If yes → RAG. If your data is relatively static and well-defined → Fine-tuning is viable.</p>
+        </div>
+      </div>
+
+      <div class="decision-step">
+        <span class="decision-num">Q2</span>
+        <div>
+          <strong style="color:#fff;font-size:0.9rem;">Do you need to cite your sources or explain your reasoning?</strong>
+          <p style="margin-top:0.4rem;margin-bottom:0;font-size:0.85rem;">If yes → RAG. The retrieved source documents serve as a built-in audit trail.</p>
+        </div>
+      </div>
+
+      <div class="decision-step">
+        <span class="decision-num">Q3</span>
+        <div>
+          <strong style="color:#fff;font-size:0.9rem;">Is the problem primarily about knowledge, or primarily about behaviour/style?</strong>
+          <p style="margin-top:0.4rem;margin-bottom:0;font-size:0.85rem;">Knowledge (facts, documents, policies) → RAG. Behaviour (tone, format, task performance) → Fine-tuning.</p>
+        </div>
+      </div>
+
+      <div class="decision-step">
+        <span class="decision-num">Q4</span>
+        <div>
+          <strong style="color:#fff;font-size:0.9rem;">Do you have 500+ high-quality labelled examples of the exact task you want the model to perform?</strong>
+          <p style="margin-top:0.4rem;margin-bottom:0;font-size:0.85rem;">If no → don't fine-tune yet. RAG with good prompting will outperform a fine-tuned model trained on insufficient data every time.</p>
+        </div>
+      </div>
+
+      <h2>What We Recommend for Most SMBs</h2>
+
+      <p>If you're a small or mid-sized business building your first production AI system, our strong default recommendation is: <strong>start with RAG.</strong></p>
+
+      <p>Here's the practical reality: RAG gets you to a working, valuable system in days or weeks rather than months. You can iterate on the knowledge base without re-training anything. You can inspect and debug why the AI said what it said. And you can switch to a better base model at any time without losing your knowledge investment.</p>
+
+      <p>Fine-tuning is a significant commitment. You need good training data (which most businesses don't have in sufficient quantity for their first AI project), compute budget, and the expertise to evaluate model performance and iterate. That's a steep ramp for your first AI deployment.</p>
+
+      <p>More importantly, we consistently find that businesses overestimate the need for fine-tuning because they're frustrated with generic AI behaviour — and then discover that the real problem was prompt engineering and knowledge base quality, not model capabilities. A well-designed RAG system with a thoughtfully crafted system prompt will outperform a poorly fine-tuned model in almost every real-world business context.</p>
+
+      <p>Once you have a working RAG system that's generating real value — real usage data, real user feedback, real examples of where it excels and falls short — that's the moment to evaluate whether fine-tuning makes sense for specific, well-defined improvements. By that point, you'll also have the training data you need.</p>
+
+      <h2>The Bottom Line</h2>
+
+      <p>RAG and fine-tuning are complementary tools, not competing ones. RAG solves the knowledge problem: giving your AI access to your information in a way that stays current and traceable. Fine-tuning solves the behaviour problem: making your AI consistently act the way your specific use case requires.</p>
+
+      <p>For most businesses, most of the time, the knowledge problem is the real bottleneck — and RAG is the right tool to solve it. Build a great RAG system first. You'll be surprised how far it takes you before you ever need to open a fine-tuning job.</p>
+
+      <p>If you're trying to decide which approach is right for your specific situation — or if you've already tried one approach and it isn't performing as expected — we're happy to dig into the details with you. Most of these decisions become much clearer once we understand the actual use case rather than the abstract question.</p>
+
+    </article>
+
+    <!-- CTA -->
+    <div style="margin-top:4rem;padding:2.5rem;background:#112040;border:1px solid rgba(17,74,177,0.3);border-radius:6px;text-align:center;">
+      <div class="tag" style="color:#114AB1;margin-bottom:1rem;display:block;">Ready to automate?</div>
+      <h2 style="font-size:1.4rem;font-weight:800;letter-spacing:-0.02em;margin-bottom:0.75rem;">See What We Can Build for You</h2>
+      <p style="color:#6793AC;font-size:0.9rem;margin-bottom:1.5rem;">Every business has different processes. Let's talk about yours.</p>
+      <a href="/#contact" style="display:inline-block;font-family:'Roboto Mono',monospace;font-size:0.7rem;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;padding:0.9rem 2rem;border-radius:3px;background:linear-gradient(135deg,#114AB1,#1a5fd4);color:#fff;text-decoration:none;box-shadow:0 4px 20px rgba(17,74,177,0.4);">Get a Free Consultation</a>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer style="border-top:1px solid rgba(17,74,177,0.1);padding:2rem 1.5rem;text-align:center;">
+    <p style="font-size:0.75rem;color:#3D5A72;font-family:'Roboto Mono',monospace;">© 2026 Marliaw Intelligence. All rights reserved. · <a href="/privacy.html" style="color:#3D5A72;text-decoration:none;" onmouseover="this.style.color='#6793AC'" onmouseout="this.style.color='#3D5A72'">Privacy Policy</a></p>
+  </footer>
+</body>
+</html>

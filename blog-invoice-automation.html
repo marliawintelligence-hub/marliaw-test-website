@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>How We Cut a Client's Invoice Processing Time from 3 Days to 11 Minutes — Marliaw Intelligence</title>
+  <meta name="description" content="A step-by-step breakdown of the n8n workflow we built to automate end-to-end invoice handling — from inbox to ERP — with zero human touchpoints." />
+  <link rel="canonical" href="https://marliawintelligence.com/blog-invoice-automation.html" />
+  <link rel="icon" type="image/svg+xml" href="brand_assets/marliaw-logo-v2-cyan.svg" />
+  <!-- OG tags -->
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="How We Cut a Client's Invoice Processing Time from 3 Days to 11 Minutes" />
+  <meta property="og:description" content="A step-by-step breakdown of the n8n workflow we built to automate end-to-end invoice handling — from inbox to ERP — with zero human touchpoints." />
+  <meta property="og:url" content="https://marliawintelligence.com/blog-invoice-automation.html" />
+  <meta property="og:site_name" content="Marliaw Intelligence" />
+  <!-- Article JSON-LD schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "How We Cut a Client's Invoice Processing Time from 3 Days to 11 Minutes",
+    "description": "A step-by-step breakdown of the n8n workflow we built to automate end-to-end invoice handling — from inbox to ERP — with zero human touchpoints.",
+    "datePublished": "2026-02-18",
+    "dateModified": "2026-02-18",
+    "author": {
+      "@type": "Organization",
+      "name": "Marliaw Intelligence",
+      "url": "https://marliawintelligence.com"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Marliaw Intelligence",
+      "url": "https://marliawintelligence.com",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://marliawintelligence.com/brand_assets/marliaw-logo-v2-cyan.svg"
+      }
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://marliawintelligence.com/blog-invoice-automation.html"
+    }
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;500&family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #070E1A; color: #fff; font-family: 'Montserrat', sans-serif; line-height: 1.7; }
+    .prose h2 { font-size: 1.4rem; font-weight: 800; letter-spacing: -0.02em; margin: 2.5rem 0 1rem; color: #fff; }
+    .prose h3 { font-size: 1.1rem; font-weight: 700; margin: 2rem 0 0.75rem; color: #6793AC; }
+    .prose p { color: #c0cfe0; font-size: 0.95rem; margin-bottom: 1.25rem; line-height: 1.8; }
+    .prose ul, .prose ol { padding-left: 1.5rem; margin-bottom: 1.25rem; }
+    .prose li { color: #c0cfe0; font-size: 0.95rem; margin-bottom: 0.5rem; line-height: 1.7; }
+    .prose ul { list-style: disc; }
+    .prose ol { list-style: decimal; }
+    .prose strong { color: #fff; font-weight: 700; }
+    .prose blockquote { border-left: 3px solid #114AB1; padding-left: 1.25rem; margin: 1.5rem 0; }
+    .prose blockquote p { color: #6793AC; font-style: italic; }
+    .prose code { font-family: 'Roboto Mono', monospace; font-size: 0.8rem; background: #112040; padding: 0.15rem 0.4rem; border-radius: 3px; color: #6793AC; }
+    .stat-box { background: #112040; border: 1px solid rgba(17,74,177,0.3); border-radius: 6px; padding: 1.5rem; margin: 1.5rem 0; }
+    .stat-box .number { font-size: 2.5rem; font-weight: 900; letter-spacing: -0.03em; background: linear-gradient(90deg, #114AB1, #6793AC); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .tag { font-family: 'Roboto Mono', monospace; font-size: 0.6rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; }
+  </style>
+</head>
+<body>
+  <!-- Nav -->
+  <nav style="position:fixed;top:0;left:0;right:0;z-index:100;padding:1rem 2rem;background:rgba(7,14,26,0.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(17,74,177,0.1);display:flex;align-items:center;justify-content:space-between;">
+    <a href="/" style="display:flex;align-items:center;text-decoration:none;">
+      <img src="brand_assets/marliaw-logo-v2-cyan.svg" style="height:36px;width:auto;" alt="Marliaw Intelligence" />
+    </a>
+    <a href="/#blog" style="font-family:'Roboto Mono',monospace;font-size:0.65rem;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:#6793AC;text-decoration:none;border:1px solid rgba(17,74,177,0.3);padding:0.5rem 1rem;border-radius:3px;transition:border-color 0.2s ease,color 0.2s ease;" onmouseover="this.style.borderColor='rgba(17,74,177,0.7)';this.style.color='#fff'" onmouseout="this.style.borderColor='rgba(17,74,177,0.3)';this.style.color='#6793AC'">← All Articles</a>
+  </nav>
+
+  <!-- Article -->
+  <main style="max-width:760px;margin:0 auto;padding:8rem 1.5rem 6rem;">
+
+    <!-- Header -->
+    <header style="margin-bottom:3rem;">
+      <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;">
+        <span class="tag" style="color:#E4580B;">Workflow Automation</span>
+        <span style="color:#3D5A72;font-family:'Roboto Mono',monospace;font-size:0.65rem;">February 18, 2026</span>
+        <span style="color:#3D5A72;font-family:'Roboto Mono',monospace;font-size:0.65rem;">8 min read</span>
+      </div>
+      <h1 style="font-size:clamp(1.8rem,4vw,2.8rem);font-weight:900;letter-spacing:-0.03em;line-height:1.1;margin-bottom:1.25rem;">How We Cut a Client's Invoice Processing Time from 3 Days to 11 Minutes</h1>
+      <p style="font-size:1.05rem;color:#6793AC;line-height:1.7;border-left:3px solid #114AB1;padding-left:1.25rem;">A logistics company was drowning in manual invoice work. We built an n8n automation that eliminated every human touchpoint — here's the full breakdown.</p>
+      <div style="margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid rgba(17,74,177,0.2);display:flex;align-items:center;gap:0.75rem;">
+        <span style="font-size:0.8rem;color:#3D5A72;font-family:'Roboto Mono',monospace;">By</span>
+        <span style="font-size:0.8rem;color:#6793AC;font-family:'Roboto Mono',monospace;font-weight:600;">Marliaw Intelligence Team</span>
+      </div>
+    </header>
+
+    <!-- Content -->
+    <article class="prose">
+
+      <p>When a mid-sized logistics company came to us in late 2025, their finance team was spending the better part of every week on a single task: processing invoices. Not reviewing them for discrepancies, not doing strategic financial analysis — just moving data from one place to another. Over and over, 200+ times every week.</p>
+
+      <p>The average time from invoice receipt to ERP entry? <strong>Three days.</strong> By the end of our engagement, that number was <strong>11 minutes</strong> — fully automated, with a fraction of the error rate. This is the story of how we got there.</p>
+
+      <h2>The Before State</h2>
+
+      <p>Before we mapped a single automation, we spent two days shadowing the finance team. What we observed was a workflow held together with manual effort, email threads, and institutional knowledge that lived entirely in people's heads.</p>
+
+      <p>Here's what the manual process looked like, step by step:</p>
+
+      <ol>
+        <li>A supplier sends an invoice via email — usually as a PDF attachment, sometimes scanned, sometimes digitally generated.</li>
+        <li>A finance team member opens the email, downloads the PDF, and renames it according to an internal naming convention.</li>
+        <li>They open a shared Google Sheet and manually type in: vendor name, invoice number, date, due date, line items, subtotal, tax, and total amount.</li>
+        <li>The sheet entry gets flagged for an accountant to review — usually the next morning, since the accountant handles reviews in batches.</li>
+        <li>Once approved, someone manually logs into the company's ERP system and re-enters all of the same data.</li>
+        <li>A confirmation email is sent to the supplier — manually composed and sent.</li>
+      </ol>
+
+      <p>The team was processing upwards of 200 invoices per week across three staff members. And with manual data entry at every stage, errors were inevitable. Their internal audit showed a <strong>12% error rate</strong> — invoices that required correction, re-entry, or follow-up with suppliers before payment could proceed. Each correction added another day or more to the cycle.</p>
+
+      <blockquote>
+        <p>"We knew it was inefficient. We just didn't realise how much time it was consuming until someone counted the hours." — Finance Manager, logistics client</p>
+      </blockquote>
+
+      <p>Three full-time team members were collectively spending roughly <strong>40 hours per week</strong> on invoice processing alone. That's one entire FTE, every single week, doing work that a machine could do better.</p>
+
+      <h2>Mapping the Automation Opportunity</h2>
+
+      <p>Our first step was a process audit. We documented every discrete action in the workflow and classified each one along two axes: <strong>how automatable it is</strong> and <strong>how much time it consumes</strong>.</p>
+
+      <p>Six steps emerged as clear automation candidates:</p>
+
+      <ol>
+        <li><strong>Email monitoring and attachment detection</strong> — a machine can watch an inbox 24/7 with zero fatigue</li>
+        <li><strong>PDF extraction and parsing</strong> — AI can read invoices more accurately than human eyes tired from screen fatigue</li>
+        <li><strong>Data validation and formatting</strong> — rules-based checks catch errors before they propagate</li>
+        <li><strong>PO matching</strong> — comparing invoice data against existing purchase orders is pure pattern-matching</li>
+        <li><strong>ERP data entry</strong> — any ERP with an API can receive structured data programmatically</li>
+        <li><strong>Supplier confirmation</strong> — templated emails triggered automatically on successful processing</li>
+      </ol>
+
+      <p>The only step that genuinely needed a human was exception handling — invoices where something looked wrong, where the amount didn't match the PO, or where vendor details were unrecognised. Everything else? Automatable.</p>
+
+      <h2>The n8n Workflow We Built</h2>
+
+      <p>We chose <strong>n8n</strong> as our automation backbone. It's open-source, self-hostable, and has native integrations for Gmail, Google Sheets, and virtually every ERP via HTTP request nodes. Crucially, it can call external AI APIs mid-workflow — which was essential for intelligent document parsing.</p>
+
+      <p>Here's the full workflow, node by node:</p>
+
+      <ul>
+        <li><code>Gmail Trigger</code> — polls the finance inbox every 2 minutes, fires when a new email with a PDF attachment arrives</li>
+        <li><code>Filter Node</code> — checks that the attachment is a PDF and that the sender domain matches a whitelist of known suppliers</li>
+        <li><code>HTTP Request → AI Extraction API</code> — sends the PDF (base64 encoded) to a Claude API endpoint with a structured extraction prompt: vendor name, invoice number, date, due date, currency, line items array, subtotal, tax rate, and total</li>
+        <li><code>JSON Parse Node</code> — validates the returned JSON against a strict schema; routes mismatches to an exceptions Slack channel</li>
+        <li><code>Google Sheets Lookup</code> — queries the PO database sheet to find a matching purchase order by vendor + approximate amount (within 5% tolerance)</li>
+        <li><code>IF Node</code> — if PO match found: continue to ERP push. If no match: route to human review queue with full context attached</li>
+        <li><code>HTTP Request → ERP API</code> — POSTs structured invoice data to the company's ERP (NetSuite) via REST API, creating an approved bill record</li>
+        <li><code>Gmail Send Node</code> — sends a templated confirmation email to the supplier with invoice number, received date, and expected payment date</li>
+        <li><code>Google Sheets Append</code> — logs the processed invoice to an audit trail sheet with timestamp and processing status</li>
+      </ul>
+
+      <p>The entire chain — from email arriving to ERP entry complete — runs in under 11 minutes on average. The longest step is the AI extraction API call, which takes 8–15 seconds depending on PDF complexity.</p>
+
+      <h3>The Exception Handling Path</h3>
+
+      <p>We were deliberate about designing the failure modes. When the workflow can't confidently process an invoice — because the AI extraction confidence is low, the PO match fails, or the amounts don't reconcile — it doesn't silently fail. It routes to a dedicated Slack channel with the original PDF, the extracted data, and a clear explanation of why it stopped. A human can review in 60 seconds and either approve or flag for supplier follow-up.</p>
+
+      <p>This exception rate started at around 8% and dropped to under 3% within a month as we refined the extraction prompts and expanded the supplier whitelist.</p>
+
+      <h2>The Results</h2>
+
+      <div class="stat-box">
+        <div class="number">3 days → 11 min</div>
+        <p style="color:#6793AC;font-size:0.85rem;margin-top:0.5rem;margin-bottom:0;">Average invoice processing cycle time, before and after.</p>
+      </div>
+
+      <div class="stat-box">
+        <div class="number">12% → 0.3%</div>
+        <p style="color:#6793AC;font-size:0.85rem;margin-top:0.5rem;margin-bottom:0;">Error rate requiring manual correction. AI extraction with validation logic is more consistent than tired eyes.</p>
+      </div>
+
+      <div class="stat-box">
+        <div class="number">40 hrs/week saved</div>
+        <p style="color:#6793AC;font-size:0.85rem;margin-top:0.5rem;margin-bottom:0;">Staff time reclaimed from manual invoice processing — equivalent to one full-time employee.</p>
+      </div>
+
+      <div class="stat-box">
+        <div class="number">ROI in 6 weeks</div>
+        <p style="color:#6793AC;font-size:0.85rem;margin-top:0.5rem;margin-bottom:0;">Total project cost recovered in under 6 weeks based on FTE cost savings alone. Ongoing cost: n8n hosting (~$50/month) + AI API calls (~$30/month).</p>
+      </div>
+
+      <p>Beyond the hard numbers: the finance team reported a dramatic reduction in stress. Month-end close, previously a multi-day scramble, now runs smoothly because invoices are processed in real time throughout the month rather than batching up.</p>
+
+      <h2>What Made This Possible</h2>
+
+      <p>Three things had to be true for this automation to work at this level of quality:</p>
+
+      <h3>1. n8n's Flexibility</h3>
+      <p>Most automation platforms are designed for simple linear workflows. n8n handles branching logic, error routing, and API calls to arbitrary external services without requiring custom code. The ability to call the Claude API mid-workflow — treating AI extraction as just another node — was the architectural unlock that made the whole thing possible.</p>
+
+      <h3>2. AI-Powered Document Parsing</h3>
+      <p>Traditional OCR tools extract text. They don't understand that "Inv. #" and "Invoice Number:" are the same field, or that a number at the bottom of a column is a total rather than a line item. We used Claude with a carefully engineered extraction prompt that returns structured JSON — not raw text — with explicit field names and a confidence score. This is the difference between "we can read the PDF" and "we understand the invoice."</p>
+
+      <h3>3. An API-First ERP</h3>
+      <p>The client happened to be on NetSuite, which has a robust REST API. If you're on an ERP that doesn't expose programmatic data entry, this specific workflow becomes significantly harder. That said, even legacy systems often have workarounds — some accept structured CSV uploads, others can be integrated via RPA tools. The principle holds; the implementation details vary.</p>
+
+      <h2>Is Your Invoice Process a Candidate for Automation?</h2>
+
+      <p>Not every finance workflow is ready for this level of automation — but most are closer than teams think. Here are five signals that yours probably is:</p>
+
+      <ul>
+        <li><strong>You process more than 20 invoices per week.</strong> Below this volume, the ROI is harder to justify. Above it, automation pays for itself quickly.</li>
+        <li><strong>Your invoices arrive in a consistent format.</strong> If 80% of your invoices come from a known set of suppliers with predictable formats, AI extraction will perform very well.</li>
+        <li><strong>You have an ERP or accounting system with an API.</strong> NetSuite, QuickBooks Online, Xero, Sage — all of these have programmatic access options.</li>
+        <li><strong>Your team is doing the same data entry more than once.</strong> If someone types the same invoice data into a spreadsheet and then into an ERP, that's pure automation opportunity.</li>
+        <li><strong>Invoice errors are causing downstream problems.</strong> Late payments, supplier relationship friction, or end-of-month scrambles often trace back to processing delays and data quality issues that automation directly addresses.</li>
+      </ul>
+
+      <h2>The Bigger Picture</h2>
+
+      <p>Invoice automation is one of the highest-ROI automation projects we implement — not because it's glamorous, but because it touches a workflow that runs continuously, involves multiple people, and produces compounding errors when done manually at scale.</p>
+
+      <p>The 40 hours per week this team reclaimed weren't lost to a machine. They were redirected: one team member shifted to vendor relationship management, another began doing actual financial analysis rather than data transcription. The automation didn't eliminate jobs — it eliminated the least valuable parts of those jobs and created space for work that requires actual human judgment.</p>
+
+      <p>That's the pattern we see consistently across automation engagements. The question is never "can we automate this?" It's "what becomes possible when we do?"</p>
+
+      <p>If your finance team is spending meaningful hours every week on invoice processing, we'd be glad to walk through your specific setup and tell you what we think is possible. The conversation is free. The savings tend to be significant.</p>
+
+    </article>
+
+    <!-- CTA -->
+    <div style="margin-top:4rem;padding:2.5rem;background:#112040;border:1px solid rgba(17,74,177,0.3);border-radius:6px;text-align:center;">
+      <div class="tag" style="color:#114AB1;margin-bottom:1rem;display:block;">Ready to automate?</div>
+      <h2 style="font-size:1.4rem;font-weight:800;letter-spacing:-0.02em;margin-bottom:0.75rem;">See What We Can Build for You</h2>
+      <p style="color:#6793AC;font-size:0.9rem;margin-bottom:1.5rem;">Every business has different processes. Let's talk about yours.</p>
+      <a href="/#contact" style="display:inline-block;font-family:'Roboto Mono',monospace;font-size:0.7rem;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;padding:0.9rem 2rem;border-radius:3px;background:linear-gradient(135deg,#114AB1,#1a5fd4);color:#fff;text-decoration:none;box-shadow:0 4px 20px rgba(17,74,177,0.4);">Get a Free Consultation</a>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer style="border-top:1px solid rgba(17,74,177,0.1);padding:2rem 1.5rem;text-align:center;">
+    <p style="font-size:0.75rem;color:#3D5A72;font-family:'Roboto Mono',monospace;">© 2026 Marliaw Intelligence. All rights reserved. · <a href="/privacy.html" style="color:#3D5A72;text-decoration:none;" onmouseover="this.style.color='#6793AC'" onmouseout="this.style.color='#3D5A72'">Privacy Policy</a></p>
+  </footer>
+</body>
+</html>
